@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Monitoreo IoT | HydroSense</title>
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Navegación principal">
+      <a href="../index.html" class="brand">HydroSense</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="monitoreo.html" aria-current="page">Monitoreo IoT</a></li>
+        <li><a href="#proyeccion">Proyección</a></li>
+        <li><a href="#alertas">Alertas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1>Panel de Monitoreo Hídrico en Tiempo Real</h1>
+      <p>Medidor IoT vinculado: <strong>HS-BA-2409-0186</strong> · Estado: <span class="badge-ok">En línea</span></p>
+    </header>
+
+    <!-- 1. PANEL DE CONSUMO (HU-007, HU-008, HU-009) -->
+    <section id="consumo" aria-labelledby="titulo-consumo">
+      <div class="section-header">
+        <h2 id="titulo-consumo">Consumo de Agua y Desglose por Uso</h2>
+        <div class="filter-group" role="group" aria-label="Filtrar periodo de consumo">
+          <button type="button" class="btn-filter active" data-period="dia">Día</button>
+          <button type="button" class="btn-filter" data-period="semana">Semana</button>
+          <button type="button" class="btn-filter" data-period="mes">Mes</button>
+        </div>
+      </div>
+
+      <div class="grid-cards">
+        <article class="card">
+          <h3>Consumo Actual (Hoy)</h3>
+          <p class="metric-value">145 L <span>(S/ 4.20)</span></p>
+          <label for="progreso-meta">Meta diaria: 200 L (75 % utilizado)</label>
+          <progress id="progreso-meta" value="145" max="200">75 %</progress>
+          <p class="metric-hint">Por debajo del umbral recomendado por la OMS (100 L/persona/día).</p>
+        </article>
+
+        <article class="card">
+          <h3>Desglose por Puntos de Uso</h3>
+          <ul class="breakdown-list">
+            <li><strong>Ducha:</strong> 40 % (58.0 L)</li>
+            <li><strong>Lavadero:</strong> 25 % (36.25 L)</li>
+            <li><strong>Cocina:</strong> 20 % (29.0 L)</li>
+            <li><strong>Otros:</strong> 15 % (21.75 L)</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. PROYECCIÓN DE FACTURACIÓN (HU-010, HU-028, HU-031) -->
+    <section id="proyeccion" aria-labelledby="titulo-proyeccion">
+      <h2 id="titulo-proyeccion">Proyección de Facturación a Fin de Mes</h2>
+      <div class="grid-cards">
+        <article class="card">
+          <h3>Estimación Tarifaria SEDAPAL</h3>
+          <p>Consumo proyectado: <strong>19 m³</strong> (4 integrantes)</p>
+          <ul class="projection-list">
+            <li>Factura estimada sin meta: <strong>S/ 58.48</strong></li>
+            <li>Factura con meta de ahorro (15 %): <strong>S/ 50.54</strong></li>
+            <li>Ahorro mensual proyectado: <strong>S/ 7.94</strong></li>
+          </ul>
+          <p class="alert-warning" role="status">
+            Aviso preventivo: Te encuentras a 1 m³ del siguiente tramo tarifario (&gt; 20 m³).
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. ALERTAS E HISTORIAL DE EVENTOS (HU-011, HU-012, HU-013, HU-014) -->
+    <section id="alertas" aria-labelledby="titulo-alertas">
+      <h2 id="titulo-alertas">Centro de Alertas y Eventos IoT</h2>
+
+      <div class="alert-banner alert-critical" role="alert">
+        <strong>Alerta crítica de fuga continua:</strong> Flujo constante detectado durante 3 horas en línea principal (0.4 L/min). Revisa llaves y sanitarios.
+      </div>
+
+      <article class="card">
+        <h3>Historial Reciente de Alertas</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha y Hora</th>
+              <th>Tipo de Evento</th>
+              <th>Detalle</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>22/11/2026 18:30</td>
+              <td>Fuga continua</td>
+              <td>Flujo ininterrumpido &gt; 3 h</td>
+              <td>Pendiente</td>
+            </tr>
+            <tr>
+              <td>21/11/2026 08:15</td>
+              <td>Corte programado</td>
+              <td>Mantenimiento de red (09:00 a 15:00)</td>
+              <td>Atendido</td>
+            </tr>
+            <tr>
+              <td>19/11/2026 21:10</td>
+              <td>Límite diario</td>
+              <td>Consumo alcanzó el 100 % de la meta (200 L)</td>
+              <td>Atendido</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>HydroSense · Monitoreo Hídrico Inteligente (ODS 6) · UPC 2026</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
