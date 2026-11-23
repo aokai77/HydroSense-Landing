@@ -1,0 +1,856 @@
+/* ==========================================================================
+   HydroSense — Hoja de estilos principal (Paleta oficial Figma + Guía 4.1)
+   Cada sección ocupa una pantalla completa (100vh) para evitar solapamientos
+   ========================================================================== */
+
+:root {
+  /* Paleta de colores oficial (Capítulo 4.1 + Figma) */
+  --color-primary: #1262D5;
+  --color-primary-hover: #0E4FB0;
+  --color-dark: #123A52;
+  --color-teal: #087F8C;
+  --color-text-muted: #62727E;
+  --color-bg-page: #F8F9FA;
+  --color-bg-card: #FFFFFF;
+  --color-bg-soft-blue: #EDF4FF;
+  --color-bg-badge-blue: #E7F0FF;
+  --color-bg-soft-teal: #E9F7F6;
+  --color-border: #DFE7EC;
+  --color-accent-muted: #AFC4D2;
+  --color-error: #C62828;
+  --color-success: #1B7A43;
+
+  /* Escala tipográfica oficial (Capítulo 4.1) */
+  --font-size-h1: 2rem;         /* 32px Bold */
+  --font-size-h2: 1.5rem;       /* 24px Bold/Semibold */
+  --font-size-label: 0.9375rem; /* 15px Medium/Bold */
+  --font-size-body: 0.875rem;   /* 14px Regular */
+  --font-size-caption: 0.75rem; /* 12px Light/Regular */
+
+  /* Layout y elevación */
+  --header-height: 72px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --shadow-card: 0 6px 20px rgba(18, 58, 82, 0.06);
+  --shadow-card-hover: 0 12px 28px rgba(18, 98, 213, 0.12);
+  --container-max: 1140px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: var(--font-size-body);
+  line-height: 1.6;
+  color: var(--color-dark);
+  background-color: var(--color-bg-page);
+}
+
+/* Accesibilidad: respeta la preferencia del sistema de reducir animaciones */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-primary);
+  color: var(--color-bg-card);
+  padding: 12px 18px;
+  z-index: 1000;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
+.container {
+  width: min(100% - 32px, var(--container-max));
+  margin-inline: auto;
+}
+
+/* Cada pantalla ocupa el alto completo de la ventana */
+.hero-section,
+.section {
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 0;
+  scroll-margin-top: var(--header-height);
+}
+
+.section-alt {
+  background-color: var(--color-bg-soft-blue);
+}
+
+.section-header {
+  max-width: 680px;
+  margin-bottom: 32px;
+}
+
+.section-header h2 {
+  margin: 6px 0 10px;
+  font-size: var(--font-size-h2);
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: var(--font-size-caption);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-teal);
+  text-transform: uppercase;
+}
+
+/* Botones (Touch target >= 48px) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--font-size-label);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-bg-card);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-outline {
+  background-color: var(--color-bg-card);
+  color: var(--color-dark);
+  border-color: var(--color-border);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* Badges y Tarjetas */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-caption);
+  font-weight: 700;
+}
+
+.badge-teal {
+  background-color: var(--color-bg-soft-teal);
+  color: var(--color-teal);
+}
+
+.badge-blue {
+  background-color: var(--color-bg-badge-blue);
+  color: var(--color-primary);
+}
+
+.card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: var(--header-height);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background-color: var(--color-bg-badge-blue);
+  color: var(--color-primary);
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  color: var(--color-text-muted);
+  font-weight: 500;
+  padding: 8px 4px;
+}
+
+.nav-list a:hover {
+  color: var(--color-primary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.accessible-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  min-height: 48px;
+}
+
+.menu-toggle {
+  display: none;
+  min-width: 48px;
+  min-height: 48px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-card);
+  color: var(--color-dark);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* Hero */
+.hero-section {
+  background: linear-gradient(180deg, var(--color-bg-soft-blue) 0%, var(--color-bg-page) 100%);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 40px;
+}
+
+.hero-copy h1 {
+  margin: 12px 0 8px;
+  font-size: var(--font-size-h1);
+  line-height: 1.15;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.hero-subtitle {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.hero-description {
+  margin: 0 0 24px;
+  color: var(--color-text-muted);
+  max-width: 540px;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-orbit {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-bg-card) 0%, var(--color-bg-badge-blue) 70%);
+  border: 2px dashed var(--color-accent-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbit-center {
+  width: 112px;
+  height: 112px;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-card);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.status-dots {
+  color: var(--color-teal);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.orbit-node {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.orbit-top-left { top: 18px; left: 10px; }
+.orbit-top-right { top: 18px; right: 10px; }
+.orbit-bottom-right { bottom: 18px; right: 16px; }
+
+/* Grillas de tarjetas */
+.profile-grid,
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.profile-card {
+  cursor: pointer;
+}
+
+.profile-card:hover,
+.step-card:hover,
+.shortcut-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.profile-card:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-bg-badge-blue);
+}
+
+.profile-card[aria-checked="true"] {
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-bg-badge-blue);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.card-number {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-teal);
+}
+
+.profile-actions {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.helper-text {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* Dashboard preview */
+.dashboard-preview-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.ring-metric {
+  width: 170px;
+  height: 170px;
+  margin: 20px auto;
+  border-radius: 50%;
+  border: 12px solid var(--color-primary);
+  background-color: var(--color-bg-soft-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-metric strong {
+  font-size: 1.8rem;
+  color: var(--color-dark);
+}
+
+.ring-metric span {
+  color: var(--color-teal);
+  font-weight: 700;
+}
+
+.shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.shortcut-card h3,
+.step-card h3,
+.profile-card h3 {
+  margin: 10px 0 6px;
+  font-size: 1.1rem;
+}
+
+.shortcut-card p,
+.step-card p,
+.profile-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+/* Simulador, Auth y Contacto */
+.simulator-card {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.simulator-result {
+  background-color: var(--color-bg-soft-blue);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 10px;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.text-teal {
+  color: var(--color-teal);
+}
+
+.auth-grid,
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.check-list {
+  padding-left: 20px;
+  color: var(--color-text-muted);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: var(--font-size-label);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  color: var(--color-dark);
+  background-color: var(--color-bg-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(18, 98, 213, 0.15);
+  outline: none;
+}
+
+.form-group input[type="range"] {
+  min-height: 36px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.form-group textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.form-feedback {
+  min-height: 1.2em;
+  font-size: var(--font-size-caption);
+  color: var(--color-error);
+}
+
+/* Botón flotante de voz */
+.fab-voice {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--color-bg-card);
+  font-size: 1.4rem;
+  box-shadow: 0 8px 24px rgba(18, 98, 213, 0.35);
+  cursor: pointer;
+  z-index: 90;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.fab-voice:hover {
+  background-color: var(--color-primary-hover);
+  transform: scale(1.06);
+}
+
+/* Footer */
+.site-footer {
+  background-color: var(--color-dark);
+  color: var(--color-bg-card);
+  padding: 36px 0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-inner p {
+  margin: 4px 0 0;
+  color: var(--color-accent-muted);
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  list-style: none;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links a {
+  color: var(--color-bg-card);
+}
+
+/* ==========================================================================
+   Modo Accesible (HU-021: +30% texto escalable + Alto Contraste WCAG AAA)
+   ========================================================================== */
+html.modo-accesible,
+body.modo-accesible {
+  font-size: 130%;
+}
+
+html.modo-accesible body,
+body.modo-accesible {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+html.modo-accesible .section-alt,
+body.modo-accesible .section-alt {
+  background-color: #EDF4FF;
+}
+
+html.modo-accesible .card,
+body.modo-accesible .card,
+html.modo-accesible .simulator-result,
+body.modo-accesible .simulator-result,
+html.modo-accesible .form-group input,
+body.modo-accesible .form-group input,
+html.modo-accesible .form-group select,
+body.modo-accesible .form-group select,
+html.modo-accesible .form-group textarea,
+body.modo-accesible .form-group textarea {
+  border: 2px solid #000000;
+  box-shadow: none;
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+html.modo-accesible p,
+body.modo-accesible p,
+html.modo-accesible h1,
+body.modo-accesible h1,
+html.modo-accesible h2,
+body.modo-accesible h2,
+html.modo-accesible h3,
+body.modo-accesible h3,
+html.modo-accesible .nav-list a,
+body.modo-accesible .nav-list a,
+html.modo-accesible .helper-text,
+body.modo-accesible .helper-text,
+html.modo-accesible .eyebrow,
+body.modo-accesible .eyebrow,
+html.modo-accesible .accessible-toggle,
+body.modo-accesible .accessible-toggle {
+  color: #000000;
+}
+
+html.modo-accesible .badge,
+body.modo-accesible .badge {
+  border: 1.5px solid #000000;
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+html.modo-accesible .btn-primary,
+body.modo-accesible .btn-primary {
+  background-color: #0A469E;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+}
+
+html.modo-accesible .btn-outline,
+body.modo-accesible .btn-outline {
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+html.modo-accesible :focus-visible,
+body.modo-accesible :focus-visible {
+  outline: 4px solid #000000;
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Panel Flotante de Asistente por Voz y Modo Lectura (HU-019)
+   ========================================================================== */
+.voice-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 92px;
+  width: min(340px, calc(100vw - 32px));
+  background-color: var(--color-bg-card);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 14px 34px rgba(18, 58, 82, 0.18);
+  padding: 18px;
+  z-index: 95;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.voice-panel.is-open {
+  display: flex;
+}
+
+.voice-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-panel-header strong {
+  font-size: var(--font-size-label);
+  color: var(--color-dark);
+}
+
+.voice-close {
+  min-width: 36px;
+  min-height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-page);
+  color: var(--color-dark);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.voice-status {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-soft-blue);
+  color: var(--color-dark);
+  font-size: 0.85rem;
+}
+
+.voice-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.voice-actions .btn {
+  padding: 0 10px;
+  font-size: 0.82rem;
+}
+
+.fab-voice.is-listening {
+  background-color: var(--color-teal);
+  box-shadow: 0 0 0 6px rgba(8, 127, 140, 0.25);
+}
+
+/* Compatibilidad con Modo Accesible */
+html.modo-accesible .voice-panel,
+body.modo-accesible .voice-panel,
+html.modo-accesible .voice-status,
+body.modo-accesible .voice-status,
+html.modo-accesible .voice-close,
+body.modo-accesible .voice-close {
+  border: 2px solid #000000;
+  background-color: #FFFFFF;
+  color: #000000;
+  box-shadow: none;
+}
+
+/* Botones de demostración de alertas simuladas (js/main.js) */
+.alert-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}

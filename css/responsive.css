@@ -1,0 +1,232 @@
+/* ==========================================================================
+   HydroSense — Adaptación Responsive (Tablet <= 992px | Mobile <= 640px)
+   Cada sección ocupa una pantalla completa para reflejar el flujo del mockup
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  .header-inner {
+    flex-wrap: wrap;
+    padding: 10px 0;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+  }
+
+  .main-nav {
+    display: none;
+    width: 100%;
+    order: 4;
+    border-top: 1px solid var(--color-border);
+    padding-top: 10px;
+  }
+
+  .main-nav.is-open {
+    display: block;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .nav-list a {
+    display: block;
+    padding: 10px 8px;
+  }
+
+  .hero-grid,
+  .dashboard-preview-grid,
+  .simulator-card,
+  .auth-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-grid {
+    text-align: center;
+    justify-items: center;
+  }
+
+  .hero-description {
+    margin-inline: auto;
+  }
+
+  .hero-cta {
+    justify-content: center;
+  }
+
+  .profile-grid,
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: min(100% - 28px, var(--container-max));
+  }
+
+  /* Header limpio en una sola fila */
+  .header-inner {
+    min-height: var(--header-height);
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .header-actions .btn {
+    display: none;
+  }
+
+  .header-actions {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .accessible-toggle {
+    font-size: 0.78rem;
+    gap: 6px;
+    min-height: 40px;
+  }
+
+  .menu-toggle {
+    order: 3;
+    margin-left: 4px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Hero a pantalla completa estilo mockup Mobile */
+  .hero-section {
+    min-height: calc(100vh - var(--header-height));
+    padding: 24px 0 32px;
+    background: linear-gradient(180deg, var(--color-bg-soft-blue) 0%, var(--color-bg-page) 45%);
+  }
+
+  .hero-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .hero-copy {
+    display: contents;
+  }
+
+  .hero-copy .badge {
+    order: 1;
+  }
+
+  .hero-copy h1 {
+    order: 2;
+    font-size: 2rem;
+    margin: 4px 0 0;
+  }
+
+  .hero-subtitle {
+    order: 3;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    max-width: 280px;
+    margin: 0;
+  }
+
+  .hero-description {
+    order: 5;
+    font-size: 0.92rem;
+    margin: 0;
+  }
+
+  .hero-visual {
+    order: 4;
+    width: 100%;
+    padding: 6px 0;
+  }
+
+  .hero-orbit {
+    width: 215px;
+    height: 215px;
+  }
+
+  .orbit-center {
+    width: 94px;
+    height: 94px;
+  }
+
+  .orbit-node {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+  }
+
+  .hero-cta {
+    order: 6;
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+  }
+
+  /* Cada sección ocupa una pantalla completa y se apila en 1 columna */
+  .section {
+    min-height: calc(100vh - var(--header-height));
+    padding: 36px 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-inline: auto;
+    margin-bottom: 24px;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .profile-grid,
+  .steps-grid,
+  .shortcuts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fab-voice {
+    right: 14px;
+    bottom: 14px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HydroSense — Controla tu consumo de agua en tiempo real, detecta fugas silenciosas y ahorra de forma simple." />
+  <title>HydroSense — Controla tu consumo de agua</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!-- Encabezado y navegación principal -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#inicio" class="brand" aria-label="HydroSense Inicio">
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+          </svg>
+        </span>
+        <span class="brand-name">HydroSense</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-principal">
+        <span aria-hidden="true">☰</span>
+      </button>
+
+      <nav id="nav-principal" class="main-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#como-funciona">¿Cómo funciona?</a></li>
+          <li><a href="#perfiles">Soluciones</a></li>
+          <li><a href="#simulador">Simulador</a></li>
+          <li><a href="pages/monitoreo.html">Monitoreo</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <label class="accessible-toggle" for="toggle-modo-accesible">
+          <span>Modo Accesible</span>
+          <input type="checkbox" id="toggle-modo-accesible" role="switch" aria-label="Activar modo accesible con texto ampliado y alto contraste" />
+        </label>
+        <a href="#acceso" class="btn btn-outline">Iniciar sesión</a>
+        <a href="#perfiles" class="btn btn-primary">Registrarse</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <!-- 1. Hero / Bienvenida (Mockup: HydroSense · Bienvenida) -->
+    <section id="inicio" class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="badge badge-teal">EMPIEZA EN UN MINUTO</span>
+          <h1>HydroSense</h1>
+          <p class="hero-subtitle">Controla tu consumo de agua y ahorra de forma simple.</p>
+          <p class="hero-description">
+            Conecta sensores IoT de bajo costo a tu hogar o local comunitario, detecta fugas silenciosas al instante y reduce el monto de tu recibo mensual.
+          </p>
+          <div class="hero-cta">
+            <a href="#perfiles" class="btn btn-primary">Registrarse</a>
+            <a href="#acceso" class="btn btn-outline">Iniciar sesión</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Ilustración del ecosistema HydroSense conectado al hogar">
+          <div class="hero-orbit">
+            <div class="orbit-node orbit-top-left" title="Monitoreo de flujo">
+              <img src="assets/icons/drop.svg" alt="Ícono de consumo de agua" />
+            </div>
+            <div class="orbit-node orbit-top-right" title="Ahorro sostenible">
+              <img src="assets/icons/leaf.svg" alt="Ícono de sostenibilidad ambiental" />
+            </div>
+            <div class="orbit-center">
+              <img src="assets/icons/home_iot.svg" alt="Hogar conectado con sensor HydroSense" />
+              <span class="status-dots" aria-hidden="true">• •</span>
+            </div>
+            <div class="orbit-node orbit-bottom-right" title="Estadísticas en tiempo real">
+              <img src="assets/icons/chart.svg" alt="Ícono de análisis e historial" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Selección de Perfil (Mockup: ¿Cómo usarás HydroSense?) -->
+    <section id="perfiles" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <span class="eyebrow">EMPIEZA EN UN MINUTO</span>
+          <h2>¿Cómo usarás HydroSense?</h2>
+          <p>Elige tu perfil. Selecciona una opción para continuar; podrás cambiarla después.</p>
+        </header>
+
+        <div class="profile-grid" role="radiogroup" aria-label="Selección de perfil de usuario">
+          <article class="card profile-card" data-profile="hogar" tabindex="0" role="radio" aria-checked="false">
+            <span class="card-number">01</span>
+            <h3>Jefe de hogar</h3>
+            <p>Administra el consumo y las metas de tu hogar con alertas claras y asistencia accesible.</p>
+            <span class="card-link">Toca para elegir</span>
+          </article>
+
+          <article class="card profile-card" data-profile="estudiante" tabindex="0" role="radio" aria-checked="false">
+            <span class="card-number">02</span>
+            <h3>Estudiante/Roommate</h3>
+            <p>Comparte hábitos y gastos con tu piso mediante retos semanales y comparativas transparentes.</p>
+            <span class="card-link">Toca para elegir</span>
+          </article>
+
+          <article class="card profile-card" data-profile="lider" tabindex="0" role="radio" aria-checked="false">
+            <span class="card-number">03</span>
+            <h3>Líder comunitario</h3>
+            <p>Coordina el uso responsable en tu comunidad con reportes PDF, cuotas y alertas por WhatsApp.</p>
+            <span class="card-link">Toca para elegir</span>
+          </article>
+        </div>
+
+        <div class="profile-actions">
+          <button id="btn-continuar-perfil" type="button" class="btn btn-primary" disabled>Continuar</button>
+          <p id="estado-perfil" class="helper-text" aria-live="polite">Ningún perfil seleccionado</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ¿Cómo funciona? (Arquitectura Web 4.2.1: IoT + App) -->
+    <section id="como-funciona" class="section">
+      <div class="container">
+        <header class="section-header">
+          <span class="eyebrow">SISTEMA IOT + APP</span>
+          <h2>¿Cómo funciona HydroSense?</h2>
+          <p>Tres pasos simples para pasar de un recibo inesperado a un control total en tiempo real.</p>
+        </header>
+
+        <div class="steps-grid">
+          <article class="card step-card">
+            <span class="badge badge-blue">Paso 1</span>
+            <h3>Vincula tu sensor IoT</h3>
+            <p>Escanea el código QR del medidor o ingresa el código de serie (<code>HS-...</code>) en menos de 10 segundos.</p>
+          </article>
+
+          <article class="card step-card">
+            <span class="badge badge-blue">Paso 2</span>
+            <h3>Visualiza litros y soles al instante</h3>
+            <p>Consulta tu avance diario, el desglose por ambientes (ducha, lavadero, cocina) y la proyección mensual.</p>
+          </article>
+
+          <article class="card step-card">
+            <span class="badge badge-blue">Paso 3</span>
+            <h3>Recibe alertas y cumple retos</h3>
+            <p>Actúa a tiempo ante fugas continuas o cortes programados y ahorra junto a tu familia o vecindario.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Vista previa de Dashboards y Funcionalidades Core (Mockups 4.6) -->
+    <section id="funcionalidades" class="section section-alt">
+      <div class="container">
+        <header class="section-header">
+          <span class="eyebrow">FUNCIONALIDADES CORE</span>
+          <h2>Todo tu consumo y gestión en un solo lugar</h2>
+          <p>Explora las vistas diseñadas para familias, roommates y administradores comunitarios.</p>
+        </header>
+
+        <div class="dashboard-preview-grid">
+          <!-- Tarjeta resumen de consumo (Mockup: Hola, Familia Pérez) -->
+          <article class="card metric-card">
+            <div class="card-top">
+              <h3>Consumo diario en tiempo real</h3>
+              <span class="badge badge-teal">En línea</span>
+            </div>
+            <div class="ring-metric" aria-label="145 litros consumidos hoy, equivalente a 4 soles con 20 céntimos">
+              <strong id="litros-hoy">145 L</strong>
+              <span id="soles-hoy">S/ 4.20</span>
+            </div>
+            <p class="helper-text">75% del límite diario alcanzado</p>
+            <a href="pages/monitoreo.html" class="btn btn-outline btn-full">Ver análisis e historial</a>
+          </article>
+
+          <!-- Tarjeta de accesos rápidos / módulos -->
+          <div class="shortcuts-grid">
+            <article class="card shortcut-card">
+              <h3>Desglose de Consumo</h3>
+              <p>Identifica cuánto se gasta en ducha (40%), lavadero (25%), cocina (20%) y otros (15%).</p>
+            </article>
+
+            <article class="card shortcut-card">
+              <h3>Alertas y Fugas</h3>
+              <p>Notificaciones inmediatas ante flujo continuo nocturno, goteos o baja presión.</p>
+            </article>
+
+            <article class="card shortcut-card">
+              <h3>Retos y Ranking</h3>
+              <p>Participa en retos como “Ducha de 5 minutos” y compara tu ahorro de forma anónima.</p>
+            </article>
+
+            <article class="card shortcut-card">
+              <h3>Gestión Comunal</h3>
+              <p>Presupuesto general, estado de cuotas, reporte en PDF y difusión rápida por WhatsApp.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Simulador de Ahorro y Tarifas SEDAPAL (HU-010 / HU-045 / Arquitectura 4.2.1) -->
+    <section id="simulador" class="section">
+      <div class="container">
+        <header class="section-header">
+          <span class="eyebrow">SIMULADOR INTERACTIVO</span>
+          <h2>Calcula tu proyección mensual y ahorro</h2>
+          <p>Ajusta tu consumo estimado para evitar saltar al siguiente bloque tarifario.</p>
+        </header>
+
+        <div class="card simulator-card">
+          <form id="form-simulador" class="simulator-form" novalidate>
+            <div class="form-group">
+              <label for="input-personas">Número de integrantes en el hogar</label>
+              <input type="number" id="input-personas" name="personas" min="1" max="20" value="4" required />
+            </div>
+
+            <div class="form-group">
+              <label for="input-consumo-m3">Consumo mensual estimado (m³): <output id="output-m3" for="input-consumo-m3">18</output> m³</label>
+              <input type="range" id="input-consumo-m3" name="consumo_m3" min="5" max="60" value="18" />
+            </div>
+
+            <div class="form-group">
+              <label for="select-meta">Meta de reducción con HydroSense</label>
+              <select id="select-meta" name="meta">
+                <option value="10">10% de ahorro</option>
+                <option value="15" selected>15% de ahorro (recomendado)</option>
+                <option value="20">20% de ahorro</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Calcular proyección</button>
+          </form>
+
+          <div id="resultado-simulador" class="simulator-result" aria-live="polite">
+            <div class="result-item">
+              <span>Factura estimada actual</span>
+              <strong id="res-actual">S/ 68.40</strong>
+            </div>
+            <div class="result-item">
+              <span>Con meta HydroSense</span>
+              <strong id="res-ahorro">S/ 58.14</strong>
+            </div>
+            <div class="result-item">
+              <span>Ahorro mensual estimado</span>
+              <strong id="res-diferencia" class="text-teal">S/ 10.26</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Acceso y Registro rápido (Mockups: Crea tu cuenta / Inicia sesión) -->
+    <section id="acceso" class="section section-alt">
+      <div class="container auth-grid">
+        <div class="card auth-info">
+          <span class="badge badge-blue" id="badge-perfil-activo">Jefe de hogar</span>
+          <h2>Crea tu cuenta o inicia sesión</h2>
+          <p>Guarda tus datos, vincula tu sensor IoT y recibe alertas de consumo en tiempo real.</p>
+          <ul class="check-list">
+            <li>Validación instantánea de correo y contraseña segura.</li>
+            <li>Compatible con acceso biométrico y modo sin conexión.</li>
+            <li>Asistente por voz y texto en lenguaje cotidiano.</li>
+          </ul>
+        </div>
+
+        <form id="form-registro" class="card auth-form" novalidate>
+          <h3>Crea tu cuenta</h3>
+
+          <div class="form-group">
+            <label for="reg-email">Correo electrónico</label>
+            <input type="email" id="reg-email" name="email" placeholder="ana@correo.com" autocomplete="email" required />
+            <small id="error-email" class="form-feedback" aria-live="polite"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-password">Contraseña</label>
+            <input type="password" id="reg-password" name="password" placeholder="Mínimo 8 caracteres y 1 número" autocomplete="new-password" required />
+            <small id="error-password" class="form-feedback" aria-live="polite"></small>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">Crear cuenta</button>
+          <p id="estado-registro" class="form-feedback" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 7. Contacto y Soporte (Arquitectura Web 4.2.1: Centro de Ayuda) -->
+    <section id="contacto" class="section">
+      <div class="container contact-grid">
+        <div>
+          <span class="eyebrow">CENTRO DE AYUDA Y SOPORTE</span>
+          <h2>¿Tienes dudas sobre los sensores o la app?</h2>
+          <p>Escríbenos para solicitar orientación sobre instalación en tu hogar, edificio o comedor popular.</p>
+        </div>
+
+        <form id="form-contacto" class="card contact-form" novalidate>
+          <div class="form-group">
+            <label for="contacto-nombre">Nombre completo</label>
+            <input type="text" id="contacto-nombre" name="nombre" placeholder="Tu nombre y apellido" required />
+          </div>
+
+          <div class="form-group">
+            <label for="contacto-correo">Correo electrónico</label>
+            <input type="email" id="contacto-correo" name="correo" placeholder="nombre@correo.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="contacto-mensaje">Mensaje</label>
+            <textarea id="contacto-mensaje" name="mensaje" rows="3" placeholder="Cuéntanos cómo podemos ayudarte..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+          <p id="estado-contacto" class="form-feedback" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Botón flotante de Asistente por Voz (Mockup: Dashboard Familia / HU-019) -->
+  <button id="btn-asistente-voz" class="fab-voice" type="button" aria-label="Consultar consumo mediante comandos de voz" title="Asistente por voz">
+    <span aria-hidden="true">🎤</span>
+  </button>
+
+  <!-- Pie de página -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>HydroSense</strong>
+        <p>Solución cleantech centrada en el usuario para el monitoreo y ahorro hídrico urbano.</p>
+      </div>
+      <nav aria-label="Enlaces del pie de página">
+        <ul class="footer-links">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#perfiles">Perfiles</a></li>
+          <li><a href="pages/monitoreo.html">Monitoreo</a></li>
+          <li><a href="#contacto">Soporte</a></li>
+        </ul>
+      </nav>
+      <p class="footer-copy">© 2026 HydroSense — UPC 1ASI0784 (NRC 15276)</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
