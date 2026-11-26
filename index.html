@@ -30,7 +30,7 @@
 
       <nav id="nav-principal" class="main-nav" aria-label="Navegación principal">
         <ul class="nav-list">
-          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#inicio" class="active">Inicio</a></li>
           <li><a href="#como-funciona">¿Cómo funciona?</a></li>
           <li><a href="#perfiles">Soluciones</a></li>
           <li><a href="#simulador">Simulador</a></li>
@@ -123,6 +123,9 @@
           <button id="btn-continuar-perfil" type="button" class="btn btn-primary" disabled>Continuar</button>
           <p id="estado-perfil" class="helper-text" aria-live="polite">Ningún perfil seleccionado</p>
         </div>
+
+        <!-- Configuración rápida según perfil seleccionado (HU-003 / HU-004) -->
+        <div id="panel-detalle-perfil" class="inline-panel" hidden aria-live="polite"></div>
       </div>
     </section>
 
@@ -154,6 +157,18 @@
             <p>Actúa a tiempo ante fugas continuas o cortes programados y ahorra junto a tu familia o vecindario.</p>
           </article>
         </div>
+
+        <!-- Vinculación rápida de sensor IoT (HU-002 / PA-02) -->
+        <div class="card" style="margin-top: 24px;">
+          <form id="form-sensor" class="btn-group-wrap" style="align-items: flex-end; margin: 0;" novalidate>
+            <div class="form-group" style="flex: 1; min-width: 240px; margin-bottom: 0;">
+              <label for="input-codigo-sensor">Prueba vinculación rápida de medidor IoT (Formato: <code>HS-XX-0000-0000</code>)</label>
+              <input type="text" id="input-codigo-sensor" value="HS-BA-2409-0186" placeholder="Ej. HS-BA-2409-0186" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Vincular sensor</button>
+          </form>
+          <p id="estado-sensor" class="helper-text" aria-live="polite">Sensor listo para vincular (ejemplo precargado: HS-BA-2409-0186).</p>
+        </div>
       </div>
     </section>
 
@@ -163,7 +178,7 @@
         <header class="section-header">
           <span class="eyebrow">FUNCIONALIDADES CORE</span>
           <h2>Todo tu consumo y gestión en un solo lugar</h2>
-          <p>Explora las vistas diseñadas para familias, roommates y administradores comunitarios.</p>
+          <p>Explora las vistas diseñadas para familias, roommates y administradores comunitarios. Haz clic en cualquier tarjeta para probarla.</p>
         </header>
 
         <div class="dashboard-preview-grid">
@@ -183,26 +198,46 @@
 
           <!-- Tarjeta de accesos rápidos / módulos -->
           <div class="shortcuts-grid">
-            <article class="card shortcut-card">
+            <article class="card shortcut-card" data-modulo="desglose" tabindex="0" role="button">
               <h3>Desglose de Consumo</h3>
               <p>Identifica cuánto se gasta en ducha (40%), lavadero (25%), cocina (20%) y otros (15%).</p>
+              <span class="card-link">Ver detalle interactivo →</span>
             </article>
 
-            <article class="card shortcut-card">
+            <article class="card shortcut-card" data-modulo="alertas" tabindex="0" role="button">
               <h3>Alertas y Fugas</h3>
               <p>Notificaciones inmediatas ante flujo continuo nocturno, goteos o baja presión.</p>
+              <span class="card-link">Simular alertas IoT →</span>
             </article>
 
-            <article class="card shortcut-card">
+            <article class="card shortcut-card" data-modulo="retos" tabindex="0" role="button">
               <h3>Retos y Ranking</h3>
               <p>Participa en retos como “Ducha de 5 minutos” y compara tu ahorro de forma anónima.</p>
+              <span class="card-link">Explorar retos y ranking →</span>
             </article>
 
-            <article class="card shortcut-card">
+            <article class="card shortcut-card" data-modulo="comunal" tabindex="0" role="button">
               <h3>Gestión Comunal</h3>
               <p>Presupuesto general, estado de cuotas, reporte en PDF y difusión rápida por WhatsApp.</p>
+              <span class="card-link">Abrir panel comunal →</span>
             </article>
           </div>
+        </div>
+
+        <!-- Panel interactivo de funcionalidades core (HU-009 a HU-033) -->
+        <div id="panel-modulo-activo" class="inline-panel" aria-live="polite">
+          <div class="card-top">
+            <h3 id="titulo-modulo-activo" style="margin:0;">Simulador de Alertas y Fugas IoT</h3>
+            <span class="badge badge-blue">Módulo Interactivo</span>
+          </div>
+          <p class="helper-text">Prueba en tiempo real las alertas preventivas y críticas de HydroSense:</p>
+          <div class="btn-group-wrap">
+            <button type="button" class="btn btn-primary" data-sim-alerta="fuga">Simular fuga</button>
+            <button type="button" class="btn btn-outline" data-sim-alerta="corte">Simular corte</button>
+            <button type="button" class="btn btn-outline" data-sim-alerta="limite">Simular límite diario</button>
+            <button type="button" class="btn btn-outline" data-sim-alerta="presion">Simular baja presión</button>
+          </div>
+          <div id="contenedor-alerta-simulada"></div>
         </div>
       </div>
     </section>
@@ -240,19 +275,26 @@
             <button type="submit" class="btn btn-primary">Calcular proyección</button>
           </form>
 
-          <div id="resultado-simulador" class="simulator-result" aria-live="polite">
-            <div class="result-item">
-              <span>Factura estimada actual</span>
-              <strong id="res-actual">S/ 68.40</strong>
+          <div>
+            <div id="resultado-simulador" class="simulator-result" aria-live="polite">
+              <div class="result-item">
+                <span>Factura estimada actual</span>
+                <strong id="res-actual">S/ 56.12</strong>
+              </div>
+              <div class="result-item">
+                <span>Con meta HydroSense</span>
+                <strong id="res-ahorro">S/ 49.75</strong>
+              </div>
+              <div class="result-item">
+                <span>Ahorro mensual estimado</span>
+                <strong id="res-diferencia" class="text-teal">S/ 6.37</strong>
+              </div>
+              <div class="result-item">
+                <span>Consumo por persona / día (OMS: 100 L)</span>
+                <strong id="res-oms">150 L/persona/día</strong>
+              </div>
             </div>
-            <div class="result-item">
-              <span>Con meta HydroSense</span>
-              <strong id="res-ahorro">S/ 58.14</strong>
-            </div>
-            <div class="result-item">
-              <span>Ahorro mensual estimado</span>
-              <strong id="res-diferencia" class="text-teal">S/ 10.26</strong>
-            </div>
+            <div id="alerta-tarifa-simulador" aria-live="polite"></div>
           </div>
         </div>
       </div>
@@ -324,6 +366,9 @@
       </div>
     </section>
   </main>
+
+  <!-- Toast de respuesta del asistente por voz -->
+  <div id="voice-toast" class="voice-toast" role="status" aria-live="polite" hidden></div>
 
   <!-- Botón flotante de Asistente por Voz (Mockup: Dashboard Familia / HU-019) -->
   <button id="btn-asistente-voz" class="fab-voice" type="button" aria-label="Consultar consumo mediante comandos de voz" title="Asistente por voz">
