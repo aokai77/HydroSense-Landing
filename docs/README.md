@@ -23,17 +23,17 @@
 | 14 | HU-014 | Historial y registro de alertas por fallas de red | `pages/monitoreo.html` |
 | 15 | HU-015 | Comparativa anónima de consumo con hogares similares | `pages/monitoreo.html` |
 | 16 | HU-016 | Retos semanales y mensuales de ahorro hídrico | `index.html` / `pages/monitoreo.html` |
-| 17 | HU-018 | Tabla de posiciones y ranking entre roommates | `index.html` (`#funcionalidades`) |
-| 18 | HU-019 | Consulta de consumo mediante comandos de voz | Global (`#btn-asistente-voz`) |
-| 19 | HU-020 | Asistente de texto en lenguaje cotidiano y simple | Global (`#voice-toast`, `#simulador`) |
-| 20 | HU-021 | Configuración de modo accesible y texto ampliado | Global (`#toggle-modo-accesible`) |
-| 21 | HU-023 | Generación automática de reportes de consumo para asambleas | `pages/monitoreo.html` |
-| 22 | HU-024 | Difusión rápida de alertas por WhatsApp para la comunidad | `pages/monitoreo.html` |
-| 23 | HU-025 | Registro de incidentes y problemas operativos del local | `pages/monitoreo.html` |
-| 24 | HU-026 | Panel de control presupuestal y cuotas comunitarias | `pages/monitoreo.html` |
-| 25 | HU-027 | Control de acceso y roles de administración del grupo | `index.html` (`#perfiles`) |
-| 26 | HU-028 | Programación de metas de consumo personalizadas | `index.html` (`#simulador`) |
-| 27 | HU-029 | Notificación de fugas menores o grifos mal cerrados | `index.html` (`#funcionalidades`) |
-| 28 | HU-031 | Estimación de ahorro monetario acumulado | `index.html` (`#simulador`) / `pages/monitoreo.html` |
-| 29 | HU-033 | Alerta por variaciones bruscas de presión en la red | `index.html` (`#funcionalidades`) |
+| 17 | HU-017 | Sistema de medallas y logros ambientales | `pages/monitoreo.html` |
+| 18 | HU-018 | Tabla de posiciones y ranking entre roommates | `index.html` (`#funcionalidades`) |
+| 19 | HU-019 | Consulta de consumo mediante comandos de voz | Global (`#btn-asistente-voz`) |
+| 20 | HU-020 | Asistente de texto en lenguaje cotidiano y simple | Global (`#voice-toast`, `#simulador`) |
+| 21 | HU-021 | Configuración de modo accesible y texto ampliado | Global (`#toggle-modo-accesible`) |
+| 22 | HU-022 | Recomendaciones de ahorro narradas en audio | Global (Asistente de voz) |
+| 23 | HU-023 | Generación automática de reportes de consumo para asambleas | `pages/monitoreo.html` |
+| 24 | HU-024 | Difusión rápida de alertas por WhatsApp para la comunidad | `pages/monitoreo.html` |
+| 25 | HU-025 | Registro de incidentes y problemas operativos del local | `pages/monitoreo.html` |
+| 26 | HU-026 | Panel de control presupuestal y cuotas comunitarias | `pages/monitoreo.html` |
+| 27 | HU-028 | Programación de metas de consumo personalizadas | `index.html` (`#simulador`) |
+| 28 | HU-029 | Notificación de fugas menores o grifos mal cerrados | `index.html` (`#funcionalidades`) |
+| 29 | HU-031 | Estimación de ahorro monetario acumulado | `index.html` (`#simulador`) / `pages/monitoreo.html` |
 | 30 | HU-045 | Comparador de tarifas e impacto en la facturación | `index.html` (`#simulador`) / `pages/monitoreo.html` |
