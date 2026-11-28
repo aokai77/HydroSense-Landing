@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HydroSense — Retos y comunidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/hydrosense-views.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Barra superior -->
+  <header class="hs-topbar">
+    <a href="../index.html#funcionalidades" class="hs-brand" aria-label="Volver al panel principal de HydroSense">
+      <svg class="hs-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+      </svg>
+      <span>HydroSense</span>
+    </a>
+    <label class="hs-accessible-toggle" for="toggle-modo-accesible">
+      <span>Modo Accesible</span>
+      <input type="checkbox" id="toggle-modo-accesible" role="switch" aria-label="Activar modo accesible con texto ampliado y alto contraste" />
+    </label>
+  </header>
+
+  <!-- Navegación entre pantallas -->
+  <nav class="hs-subnav" aria-label="Navegación del panel">
+    <a href="../index.html#funcionalidades" class="hs-nav-item" data-page="index.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Inicio</span>
+    </a>
+    <a href="analisis.html" class="hs-nav-item" data-page="analisis.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      <span>Análisis</span>
+    </a>
+    <a href="retos.html" class="hs-nav-item active" data-page="retos.html" aria-current="page">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+      </svg>
+      <span>Retos</span>
+    </a>
+    <a href="proyeccion.html" class="hs-nav-item" data-page="proyeccion.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+      </svg>
+      <span>Proyección y ahorro</span>
+    </a>
+    <a href="consejos.html" class="hs-nav-item" data-page="consejos.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+      </svg>
+      <span>Guías y consejos</span>
+    </a>
+    <a href="dispositivos.html" class="hs-nav-item" data-page="dispositivos.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3"/><path d="M15 1v3"/><path d="M9 20v3"/><path d="M15 20v3"/><path d="M20 9h3"/><path d="M20 14h3"/><path d="M1 9h3"/><path d="M1 14h3"/>
+      </svg>
+      <span>Dispositivos</span>
+    </a>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="hs-container">
+    <div class="hs-page-header-row">
+      <div>
+        <h1 class="hs-page-title" style="margin-bottom: 4px;">Retos y comunidad</h1>
+        <p class="hs-card-subtitle">Cumple metas semanales de ahorro y compite con tus vecinos</p>
+      </div>
+      <div class="hs-user-stats-group">
+        <span class="hs-medal-pill">🏅 Medalla Oro</span>
+        <div class="hs-points-pill">
+          <strong id="userPointsVal">2,480</strong>
+          <span>puntos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hs-retos-layout">
+      <!-- Columna izquierda: Retos activos y banner comunitario -->
+      <div>
+        <div class="hs-section-row-head">
+          <h2 class="hs-section-heading">Retos</h2>
+          <button type="button" class="hs-text-link" id="btnToggleAllChallenges">Ver todos</button>
+        </div>
+
+        <div class="hs-challenges-grid">
+          <!-- Reto 1 -->
+          <article class="hs-card hs-challenge-card">
+            <div>
+              <div class="hs-challenge-top">
+                <div class="hs-challenge-icon is-blue" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4v5h5"/><path d="M4 9a9 9 0 0 1 14.2-7.3"/><line x1="12" y1="13" x2="12" y2="15"/><line x1="9" y1="16" x2="9" y2="18"/><line x1="15" y1="16" x2="15" y2="18"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="hs-challenge-eyebrow">RETO ACTIVO</span>
+                  <h3 class="hs-challenge-title">Ducha de 5 minutos</h3>
+                </div>
+              </div>
+              <p class="hs-challenge-desc">Cumple la meta 4 días esta semana.</p>
+            </div>
+
+            <div>
+              <div class="hs-challenge-progress-meta">
+                <span><strong>2 de 4</strong> días</span>
+                <span class="hs-points-tag">+120 pts</span>
+              </div>
+              <div class="hs-progress-track">
+                <div class="hs-progress-fill" style="width: 50%; background: #087F8C;"></div>
+              </div>
+              <div class="hs-challenge-footer">
+                <span class="hs-joined-count">👥 <span id="joinedCount1">32</span> unidos</span>
+                <button type="button" class="hs-btn-join" data-challenge="1" data-points="120" data-joined="32">Unirme</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Reto 2 -->
+          <article class="hs-card hs-challenge-card">
+            <div>
+              <div class="hs-challenge-top">
+                <div class="hs-challenge-icon is-teal" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="hs-challenge-eyebrow">RETO ACTIVO</span>
+                  <h3 class="hs-challenge-title">Cocina sin desperdicio</h3>
+                </div>
+              </div>
+              <p class="hs-challenge-desc">Reutiliza el agua al lavar alimentos.</p>
+            </div>
+
+            <div>
+              <div class="hs-challenge-progress-meta">
+                <span><strong>1 de 3</strong> días</span>
+                <span class="hs-points-tag">+80 pts</span>
+              </div>
+              <div class="hs-progress-track">
+                <div class="hs-progress-fill" style="width: 33%; background: #087F8C;"></div>
+              </div>
+              <div class="hs-challenge-footer">
+                <span class="hs-joined-count">👥 <span id="joinedCount2">19</span> unidos</span>
+                <button type="button" class="hs-btn-join" data-challenge="2" data-points="80" data-joined="19">Unirme</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Reto 3 (oculto hasta pulsar "Ver todos") -->
+          <article class="hs-card hs-challenge-card is-extra-challenge" hidden>
+            <div>
+              <div class="hs-challenge-top">
+                <div class="hs-challenge-icon is-blue" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="2" width="18" height="20" rx="2"/><circle cx="12" cy="13" r="5"/><line x1="7" y1="6" x2="7.01" y2="6"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="hs-challenge-eyebrow">RETO SEMANAL</span>
+                  <h3 class="hs-challenge-title">Carga completa en lavadora</h3>
+                </div>
+              </div>
+              <p class="hs-challenge-desc">Evita ciclos medios durante 7 días.</p>
+            </div>
+
+            <div>
+              <div class="hs-challenge-progress-meta">
+                <span><strong>3 de 7</strong> días</span>
+                <span class="hs-points-tag">+100 pts</span>
+              </div>
+              <div class="hs-progress-track">
+                <div class="hs-progress-fill" style="width: 43%; background: #087F8C;"></div>
+              </div>
+              <div class="hs-challenge-footer">
+                <span class="hs-joined-count">👥 <span id="joinedCount3">24</span> unidos</span>
+                <button type="button" class="hs-btn-join" data-challenge="3" data-points="100" data-joined="24">Unirme</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Reto 4 (oculto hasta pulsar "Ver todos") -->
+          <article class="hs-card hs-challenge-card is-extra-challenge" hidden>
+            <div>
+              <div class="hs-challenge-top">
+                <div class="hs-challenge-icon is-teal" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22v-7"/><path d="M9 15c-3 0-5-2-5-5 3 0 5 2 5 5z"/><path d="M15 15c3 0 5-2 5-5-3 0-5 2-5 5z"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="hs-challenge-eyebrow">RETO VECINAL</span>
+                  <h3 class="hs-challenge-title">Riego nocturno eficiente</h3>
+                </div>
+              </div>
+              <p class="hs-challenge-desc">Riega macetas después de las 7:00 p. m.</p>
+            </div>
+
+            <div>
+              <div class="hs-challenge-progress-meta">
+                <span><strong>2 de 5</strong> días</span>
+                <span class="hs-points-tag">+90 pts</span>
+              </div>
+              <div class="hs-progress-track">
+                <div class="hs-progress-fill" style="width: 40%; background: #087F8C;"></div>
+              </div>
+              <div class="hs-challenge-footer">
+                <span class="hs-joined-count">👥 <span id="joinedCount4">15</span> unidos</span>
+                <button type="button" class="hs-btn-join" data-challenge="4" data-points="90" data-joined="15">Unirme</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Banner inferior de logro comunitario -->
+        <div class="hs-community-banner">
+          <div class="hs-banner-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+          </div>
+          <p>La comunidad ahorró <strong>1,240 L</strong> esta semana. ¡Sigamos así!</p>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Ranking Top 3 semanal -->
+      <div>
+        <div class="hs-section-row-head">
+          <h2 class="hs-section-heading">Ranking</h2>
+          <span class="hs-muted-label">Top 3 semanal</span>
+        </div>
+
+        <section class="hs-card">
+          <div class="hs-card-header">
+            <div>
+              <h3 class="hs-card-title">Quienes más ahorraron</h3>
+              <p class="hs-card-subtitle">Esta semana · Hogar y vecinos</p>
+            </div>
+            <span class="hs-badge-trend">461 L</span>
+          </div>
+
+          <div class="hs-ranking-list">
+            <div class="hs-rank-row rank-1">
+              <div class="hs-rank-left">
+                <span class="hs-rank-medal" aria-hidden="true">🥇</span>
+                <div>
+                  <strong class="hs-rank-name">1. Camila Rojas</strong>
+                  <span class="hs-rank-unit">Dpto. 302</span>
+                </div>
+              </div>
+              <div class="hs-rank-right">
+                <span class="hs-rank-liters">-180 L</span>
+                <span class="hs-rank-sub">ahorrados</span>
+              </div>
+            </div>
+
+            <div class="hs-rank-row rank-2">
+              <div class="hs-rank-left">
+                <span class="hs-rank-medal" aria-hidden="true">🥈</span>
+                <div>
+                  <strong class="hs-rank-name">2. Diego Salas</strong>
+                  <span class="hs-rank-unit">Dpto. 104</span>
+                </div>
+              </div>
+              <div class="hs-rank-right">
+                <span class="hs-rank-liters">-154 L</span>
+                <span class="hs-rank-sub">ahorrados</span>
+              </div>
+            </div>
+
+            <div class="hs-rank-row rank-3">
+              <div class="hs-rank-left">
+                <span class="hs-rank-medal" aria-hidden="true">🥉</span>
+                <div>
+                  <strong class="hs-rank-name">3. Lucía y Mateo</strong>
+                  <span class="hs-rank-unit">Dpto. 201</span>
+                </div>
+              </div>
+              <div class="hs-rank-right">
+                <span class="hs-rank-liters">-127 L</span>
+                <span class="hs-rank-sub">ahorrados</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast de respuesta del asistente por voz -->
+  <div id="voice-toast" class="hs-voice-toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Botón flotante de Asistente por Voz -->
+  <button id="btn-asistente-voz" class="hs-fab-voice" type="button" aria-label="Consultar consumo mediante comandos de voz" title="Asistente por voz">
+    <span aria-hidden="true">🎤</span>
+  </button>
+
+  <script src="../js/hydrosense-views.js"></script>
+</body>
+</html>

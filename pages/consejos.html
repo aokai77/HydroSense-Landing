@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HydroSense — Guías y consejos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/hydrosense-views.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Barra superior -->
+  <header class="hs-topbar">
+    <a href="../index.html#funcionalidades" class="hs-brand" aria-label="Volver al panel principal de HydroSense">
+      <svg class="hs-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+      </svg>
+      <span>HydroSense</span>
+    </a>
+    <label class="hs-accessible-toggle" for="toggle-modo-accesible">
+      <span>Modo Accesible</span>
+      <input type="checkbox" id="toggle-modo-accesible" role="switch" aria-label="Activar modo accesible con texto ampliado y alto contraste" />
+    </label>
+  </header>
+
+  <!-- Navegación entre pantallas -->
+  <nav class="hs-subnav" aria-label="Navegación del panel">
+    <a href="../index.html#funcionalidades" class="hs-nav-item" data-page="index.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Inicio</span>
+    </a>
+    <a href="analisis.html" class="hs-nav-item" data-page="analisis.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      <span>Análisis</span>
+    </a>
+    <a href="retos.html" class="hs-nav-item" data-page="retos.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+      </svg>
+      <span>Retos</span>
+    </a>
+    <a href="proyeccion.html" class="hs-nav-item" data-page="proyeccion.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+      </svg>
+      <span>Proyección y ahorro</span>
+    </a>
+    <a href="consejos.html" class="hs-nav-item active" data-page="consejos.html" aria-current="page">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+      </svg>
+      <span>Guías y consejos</span>
+    </a>
+    <a href="dispositivos.html" class="hs-nav-item" data-page="dispositivos.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3"/><path d="M15 1v3"/><path d="M9 20v3"/><path d="M15 20v3"/><path d="M20 9h3"/><path d="M20 14h3"/><path d="M1 9h3"/><path d="M1 14h3"/>
+      </svg>
+      <span>Dispositivos</span>
+    </a>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="hs-container">
+    <h1 class="hs-page-title">Guías, consejos y soporte</h1>
+
+    <!-- 1. Simulaciones y Guías Interactivas -->
+    <section class="hs-section-block" aria-labelledby="titulo-simulaciones">
+      <div class="hs-section-row-head">
+        <div>
+          <span class="hs-eyebrow">SIMULACIONES Y GUÍAS</span>
+          <h2 class="hs-section-heading" id="titulo-simulaciones">Responde ante alertas y estima tu factura</h2>
+        </div>
+        <a href="dispositivos.html" class="hs-text-link">Gestionar sensores IoT &rarr;</a>
+      </div>
+
+      <div class="hs-grid-2">
+        <!-- Tarjeta izquierda: Alertas preventivas -->
+        <article class="hs-card">
+          <div class="hs-card-header">
+            <div>
+              <h3 class="hs-card-title">Alertas preventivas ante incidentes</h3>
+              <p class="hs-card-subtitle">Selecciona un escenario para ver cómo actúa HydroSense</p>
+            </div>
+          </div>
+
+          <div class="hs-sim-btn-grid">
+            <button type="button" class="hs-sim-pill active" data-consejo-alerta="fuga">🚨 Posible fuga continua</button>
+            <button type="button" class="hs-sim-pill" data-consejo-alerta="corte">🚰 Corte programado</button>
+            <button type="button" class="hs-sim-pill" data-consejo-alerta="limite">📊 Límite diario al 85%</button>
+            <button type="button" class="hs-sim-pill" data-consejo-alerta="presion">📉 Baja presión en red</button>
+          </div>
+
+          <div class="hs-alert-guide-box" id="consejoAlertOutput" aria-live="polite">
+            <div class="hs-alert-guide-head">
+              <span class="hs-alert-tag is-danger">Alerta de flujo continuo</span>
+              <span class="hs-muted-label">Sensor HS-BA-2409-0186</span>
+            </div>
+            <h4>Posible fuga silenciosa detectada (0.8 L/min constantes)</h4>
+            <p>Se detectó paso de agua ininterrumpido durante más de 45 minutos sin apertura manual registrada.</p>
+            <ul class="hs-guide-steps">
+              <li>Revisa el tanque del inodoro verificando si hay movimiento en el espejo de agua.</li>
+              <li>Comprueba llaves de paso en lavadero y patio trasero.</li>
+              <li>Si el flujo persiste, cierra la válvula general y programa revisión técnica.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Tarjeta derecha: Simulador de tarifa doméstica -->
+        <article class="hs-card">
+          <div class="hs-card-header">
+            <div>
+              <h3 class="hs-card-title">Simulador de tarifa doméstica</h3>
+              <p class="hs-card-subtitle">Ajusta tu consumo mensual (m³) y tu meta de ahorro</p>
+            </div>
+          </div>
+
+          <div class="hs-simulator-controls">
+            <div class="hs-control-group">
+              <div class="hs-control-label">
+                <span>Consumo mensual actual</span>
+                <strong id="consejoM3Val">18 m³</strong>
+              </div>
+              <input type="range" id="consejoM3Slider" min="6" max="40" value="18" step="1">
+            </div>
+
+            <div class="hs-control-group">
+              <div class="hs-control-label">
+                <span>Meta de reducción</span>
+                <strong id="consejoMetaVal">15% de ahorro</strong>
+              </div>
+              <input type="range" id="consejoMetaSlider" min="5" max="35" value="15" step="5">
+            </div>
+          </div>
+
+          <div class="hs-sim-summary-grid">
+            <div class="hs-sim-mini-kpi">
+              <span>Recibo actual</span>
+              <strong id="consejoResActual">S/ 55.44</strong>
+            </div>
+            <div class="hs-sim-mini-kpi">
+              <span>Con meta</span>
+              <strong id="consejoResMeta">S/ 47.12</strong>
+            </div>
+            <div class="hs-sim-mini-kpi is-highlight">
+              <span>Ahorro mensual</span>
+              <strong id="consejoResAhorro">S/ 8.32</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. Sobre HydroSense -->
+    <section class="hs-section-block" aria-labelledby="titulo-nosotros">
+      <div class="hs-section-row-head">
+        <div>
+          <span class="hs-eyebrow">NOSOTROS</span>
+          <h2 class="hs-section-heading" id="titulo-nosotros">Tecnología accesible para cuidar cada gota</h2>
+        </div>
+      </div>
+
+      <div class="hs-card hs-about-banner">
+        <p>HydroSense nació en Lima para ayudar a hogares y comunidades a visualizar su consumo hídrico sin depender de recibos tardíos ni instalaciones complejas.</p>
+      </div>
+
+      <div class="hs-grid-3">
+        <article class="hs-card hs-pillar-card">
+          <span class="hs-pill-blue">01 · Misión</span>
+          <h3>Democratizar el monitoreo</h3>
+          <p>Brindar sensores fáciles de instalar y una plataforma clara para todas las edades.</p>
+        </article>
+
+        <article class="hs-card hs-pillar-card">
+          <span class="hs-pill-blue">02 · Visión</span>
+          <h3>Comunidades resilientes</h3>
+          <p>Reducir en 20% el desperdicio doméstico mediante hábitos compartidos y alertas tempranas.</p>
+        </article>
+
+        <article class="hs-card hs-pillar-card">
+          <span class="hs-pill-blue">03 · Propuesta de valor</span>
+          <h3>Datos simples, ahorro real</h3>
+          <p>Traducimos litros en soles y recomendaciones accionables cada día.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. Soporte Técnico y Contacto -->
+    <section class="hs-section-block" aria-labelledby="titulo-soporte">
+      <div class="hs-section-row-head">
+        <div>
+          <span class="hs-eyebrow">SOPORTE Y CONTACTO</span>
+          <h2 class="hs-section-heading" id="titulo-soporte">¿Necesitas ayuda con tu sensor o cuenta?</h2>
+        </div>
+      </div>
+
+      <div class="hs-grid-2">
+        <article class="hs-card">
+          <h3 class="hs-card-title" style="margin-bottom: 14px;">Canales de atención</h3>
+          <div class="hs-support-channels">
+            <div class="hs-support-item">
+              <div class="hs-item-icon ducha" aria-hidden="true">✉️</div>
+              <div>
+                <strong>Correo de soporte</strong>
+                <p>soporte@hydrosense.pe</p>
+              </div>
+            </div>
+
+            <div class="hs-support-item">
+              <div class="hs-item-icon lavadero" aria-hidden="true">💬</div>
+              <div>
+                <strong>Asistencia rápida</strong>
+                <p>Lunes a sábado · 8:00 a. m. – 6:00 p. m.</p>
+              </div>
+            </div>
+
+            <div class="hs-support-item">
+              <div class="hs-item-icon cocina" aria-hidden="true">📍</div>
+              <div>
+                <strong>Cobertura</strong>
+                <p>Lima Metropolitana y Callao</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="hs-card">
+          <form id="hsSupportForm" class="hs-support-form" novalidate>
+            <div class="hs-form-group">
+              <label for="supNombre">Nombre completo</label>
+              <input type="text" id="supNombre" placeholder="Ej. Carlos Mendoza" required>
+            </div>
+
+            <div class="hs-form-group">
+              <label for="supCorreo">Correo electrónico</label>
+              <input type="email" id="supCorreo" placeholder="carlos@correo.com" required>
+            </div>
+
+            <div class="hs-form-group">
+              <label for="supTema">Motivo de consulta</label>
+              <select id="supTema">
+                <option value="sensor">Instalación o vinculación de sensor IoT</option>
+                <option value="fuga">Alerta de fuga o lectura inusual</option>
+                <option value="cuenta">Acceso a cuenta o perfil comunitario</option>
+              </select>
+            </div>
+
+            <div class="hs-form-group">
+              <label for="supMensaje">Mensaje</label>
+              <textarea id="supMensaje" rows="3" placeholder="Cuéntanos brevemente cómo podemos ayudarte..." required></textarea>
+            </div>
+
+            <button type="submit" class="hs-btn-join" style="width: 100%; padding: 11px;">Enviar consulta</button>
+            <p id="supFeedback" class="hs-form-status" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast de respuesta del asistente por voz -->
+  <div id="voice-toast" class="hs-voice-toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Botón flotante de Asistente por Voz -->
+  <button id="btn-asistente-voz" class="hs-fab-voice" type="button" aria-label="Consultar consumo mediante comandos de voz" title="Asistente por voz">
+    <span aria-hidden="true">🎤</span>
+  </button>
+
+  <script src="../js/hydrosense-views.js"></script>
+</body>
+</html>

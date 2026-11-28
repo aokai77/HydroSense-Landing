@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HydroSense — Dispositivos vinculados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/hydrosense-views.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <!-- Barra superior -->
+  <header class="hs-topbar">
+    <a href="../index.html#funcionalidades" class="hs-brand" aria-label="Volver al panel principal de HydroSense">
+      <svg class="hs-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+      </svg>
+      <span>HydroSense</span>
+    </a>
+    <label class="hs-accessible-toggle" for="toggle-modo-accesible">
+      <span>Modo Accesible</span>
+      <input type="checkbox" id="toggle-modo-accesible" role="switch" aria-label="Activar modo accesible con texto ampliado y alto contraste" />
+    </label>
+  </header>
+
+  <!-- Navegación entre pantallas -->
+  <nav class="hs-subnav" aria-label="Navegación del panel">
+    <a href="../index.html#funcionalidades" class="hs-nav-item" data-page="index.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Inicio</span>
+    </a>
+    <a href="analisis.html" class="hs-nav-item" data-page="analisis.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      <span>Análisis</span>
+    </a>
+    <a href="retos.html" class="hs-nav-item" data-page="retos.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+      </svg>
+      <span>Retos</span>
+    </a>
+    <a href="proyeccion.html" class="hs-nav-item" data-page="proyeccion.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+      </svg>
+      <span>Proyección y ahorro</span>
+    </a>
+    <a href="consejos.html" class="hs-nav-item" data-page="consejos.html">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+      </svg>
+      <span>Guías y consejos</span>
+    </a>
+    <a href="dispositivos.html" class="hs-nav-item active" data-page="dispositivos.html" aria-current="page">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3"/><path d="M15 1v3"/><path d="M9 20v3"/><path d="M15 20v3"/><path d="M20 9h3"/><path d="M20 14h3"/><path d="M1 9h3"/><path d="M1 14h3"/>
+      </svg>
+      <span>Dispositivos</span>
+    </a>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="hs-container">
+    <!-- =====================================================================
+         VISTA 1: LISTA DE DISPOSITIVOS VINCULADOS (Mockup 4.6)
+         ===================================================================== -->
+    <div id="viewDevicesList" class="hs-dev-view">
+      <div class="hs-section-row-head">
+        <div>
+          <span class="hs-eyebrow">GESTIÓN IOT DEL HOGAR</span>
+          <h1 class="hs-page-title" style="margin-bottom: 4px;">Dispositivos vinculados</h1>
+          <p class="hs-card-subtitle">Supervisa el estado de conexión y batería de tus sensores de flujo</p>
+        </div>
+        <span class="hs-badge-trend" id="devicesCounterBadge">2 dispositivos</span>
+      </div>
+
+      <div class="hs-devices-grid" id="devicesGrid">
+        <!-- Dispositivo 1: Sensor Principal -->
+        <article class="hs-card hs-device-card">
+          <div class="hs-device-main">
+            <div class="hs-device-icon is-online" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <div class="hs-device-info">
+              <h3>Sensor Principal</h3>
+              <span class="hs-device-serial">N.° de serie: <strong>HS-BA-2409-0186</strong></span>
+              <div class="hs-device-meta">
+                <span>📍 Espacio: Baño</span>
+                <span>🔋 Batería: 84%</span>
+              </div>
+            </div>
+          </div>
+          <span class="hs-status-pill is-online"><span class="hs-dot"></span> En línea</span>
+        </article>
+
+        <!-- Dispositivo 2: Sensor Cocina -->
+        <article class="hs-card hs-device-card">
+          <div class="hs-device-main">
+            <div class="hs-device-icon is-offline" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <div class="hs-device-info">
+              <h3>Sensor Cocina</h3>
+              <span class="hs-device-serial">N.° de serie: <strong>HS-CO-2409-0142</strong></span>
+              <div class="hs-device-meta">
+                <span>📍 Espacio: Cocina</span>
+                <span>🔋 Batería: 12%</span>
+              </div>
+            </div>
+          </div>
+          <span class="hs-status-pill is-offline"><span class="hs-dot"></span> Sin conexión</span>
+        </article>
+      </div>
+
+      <!-- Botón central para abrir el modal de vinculación -->
+      <div class="hs-link-cta-wrap">
+        <button type="button" class="hs-btn-primary-wide" id="btnOpenLinkModal">
+          + Vincular dispositivo
+        </button>
+        <p class="hs-helper-center">Escanea el código QR o ingresa el número de serie del sensor</p>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL: VINCULAR DISPOSITIVO (Mockup 4.6)
+         ===================================================================== -->
+    <div id="linkDeviceModal" class="hs-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalVincularTitle" hidden>
+      <div class="hs-modal-card">
+        <div class="hs-modal-head">
+          <div>
+            <h2 id="modalVincularTitle">Vincular dispositivo</h2>
+            <p class="hs-card-subtitle">Elige cómo deseas registrar tu nuevo sensor HydroSense</p>
+          </div>
+          <button type="button" class="hs-modal-close" id="btnCloseLinkModal" aria-label="Cerrar ventana">✕</button>
+        </div>
+
+        <div class="hs-modal-options">
+          <button type="button" class="hs-option-row" id="optChooseQR">
+            <div class="hs-option-left">
+              <div class="hs-challenge-icon is-blue" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M20 14v7h-7"/>
+                </svg>
+              </div>
+              <div style="text-align: left;">
+                <strong>Escanear código QR</strong>
+                <span class="hs-card-subtitle" style="display:block;">Usa la cámara para leer la etiqueta del sensor</span>
+              </div>
+            </div>
+            <span>&rsaquo;</span>
+          </button>
+
+          <button type="button" class="hs-option-row" id="optChooseManual">
+            <div class="hs-option-left">
+              <div class="hs-challenge-icon is-teal" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6.01" y2="10"/><line x1="10" y1="10" x2="10.01" y2="10"/><line x1="14" y1="10" x2="14.01" y2="10"/><line x1="18" y1="10" x2="18.01" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/>
+                </svg>
+              </div>
+              <div style="text-align: left;">
+                <strong>Ingresar código manualmente</strong>
+                <span class="hs-card-subtitle" style="display:block;">Escribe el número de serie HS-XX-0000-0000</span>
+              </div>
+            </div>
+            <span>&rsaquo;</span>
+          </button>
+        </div>
+
+        <div class="hs-info-callout">
+          <span aria-hidden="true">ℹ️</span>
+          <span>Encontrarás ambos códigos impresos en la etiqueta lateral del medidor.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         VISTA 2: ESCANEAR CÓDIGO QR (Mockup 4.6)
+         ===================================================================== -->
+    <div id="viewScanQR" class="hs-dev-view" hidden>
+      <div class="hs-card hs-flow-card">
+        <div class="hs-card-header">
+          <div>
+            <h2 class="hs-card-title">Escanear código QR</h2>
+            <p class="hs-card-subtitle">Apunta la cámara al código QR de la etiqueta de tu sensor HydroSense</p>
+          </div>
+          <button type="button" class="hs-text-link" data-back-devices>&larr; Volver a dispositivos</button>
+        </div>
+
+        <div class="hs-qr-viewport" id="qrViewport">
+          <span class="hs-qr-status-pill" id="qrStatusText">••• Buscando código...</span>
+
+          <div class="hs-qr-frame">
+            <span class="hs-qr-corner tl"></span>
+            <span class="hs-qr-corner tr"></span>
+            <span class="hs-qr-corner bl"></span>
+            <span class="hs-qr-corner br"></span>
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.85">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M20 14v7h-7"/>
+            </svg>
+          </div>
+
+          <span class="hs-qr-hint">Alinea el código dentro del recuadro</span>
+        </div>
+
+        <div class="hs-qr-actions">
+          <button type="button" class="hs-btn-outline-wide" id="btnToggleFlash">
+            🔦 Activar linterna
+          </button>
+          <button type="button" class="hs-btn-primary-wide" id="btnSimulateQRScan">
+            Simular lectura QR (HS-LV-2409-0214)
+          </button>
+        </div>
+
+        <p class="hs-helper-center" style="margin-top: 14px;">
+          ¿No puedes escanear el código?
+          <button type="button" class="hs-text-link" id="btnSwitchToManual">Ingrésalo manualmente</button>
+        </p>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         VISTA 3: INGRESAR CÓDIGO MANUALMENTE (Mockup 4.6)
+         ===================================================================== -->
+    <div id="viewManualCode" class="hs-dev-view" hidden>
+      <div class="hs-card hs-flow-card">
+        <div class="hs-card-header">
+          <div>
+            <h2 class="hs-card-title">Ingresar código manualmente</h2>
+            <p class="hs-card-subtitle">Ubica el número de serie impreso debajo del código QR en la etiqueta de tu sensor</p>
+          </div>
+          <button type="button" class="hs-text-link" data-back-devices>&larr; Volver a dispositivos</button>
+        </div>
+
+        <!-- Ilustración de etiqueta del sensor -->
+        <div class="hs-label-guide-box">
+          <div class="hs-label-qr-mini" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M20 14v7h-7"/>
+            </svg>
+            <small>HS-BA-2409-0186</small>
+          </div>
+          <div>
+            <span class="hs-challenge-eyebrow">ETIQUETA DEL SENSOR</span>
+            <p style="font-size: 0.85rem; color: var(--hs-dark); margin-top: 4px;">
+              El código inicia con <strong>HS</strong> seguido de 12 caracteres alfanuméricos.
+            </p>
+          </div>
+        </div>
+
+        <form id="formManualSerial" class="hs-support-form" style="margin-top: 18px;" novalidate>
+          <div class="hs-form-group">
+            <label for="inputSerialCode">Número de serie</label>
+            <input type="text" id="inputSerialCode" placeholder="HS - BA - 2409 - 0160" maxlength="18" required>
+            <span class="hs-card-subtitle">Incluye guiones o escríbelo de corrido; se valida automáticamente.</span>
+          </div>
+
+          <div class="hs-form-group">
+            <label for="selectRoomLocation">Ubicación del sensor</label>
+            <select id="selectRoomLocation">
+              <option value="Baño">Baño</option>
+              <option value="Cocina">Cocina</option>
+              <option value="Lavadero">Lavadero</option>
+              <option value="Patio / Jardín">Patio / Jardín</option>
+            </select>
+          </div>
+
+          <button type="submit" class="hs-btn-primary-wide">Vincular dispositivo</button>
+          <p id="manualSerialFeedback" class="hs-form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="hs-helper-center" style="margin-top: 12px;">
+          ¿Prefieres usar la cámara?
+          <button type="button" class="hs-text-link" id="btnSwitchToQR">Escanear código QR</button>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast de respuesta del asistente por voz -->
+  <div id="voice-toast" class="hs-voice-toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Botón flotante de Asistente por Voz -->
+  <button id="btn-asistente-voz" class="hs-fab-voice" type="button" aria-label="Consultar consumo mediante comandos de voz" title="Asistente por voz">
+    <span aria-hidden="true">🎤</span>
+  </button>
+
+  <script src="../js/hydrosense-views.js"></script>
+</body>
+</html>

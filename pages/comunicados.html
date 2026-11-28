@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Difusión de Comunicados del Condominio — HydroSense" />
+  <title>Difusión de Comunicados — HydroSense</title>
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/hydrosense-views.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    /* Estilos específicos de Difusión de Comunicados (pages/comunicados.html) */
+    .hs-com-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .hs-com-header h1 {
+      margin: 4px 0 6px;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+
+    .hs-com-header p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+    }
+
+    .hs-com-actions-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .hs-com-kpis {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .hs-kpi-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--color-dark);
+    }
+
+    /* Barra de filtros */
+    .hs-com-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .hs-filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hs-filter-btn {
+      min-height: 38px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-card);
+      color: var(--color-text-muted);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .hs-filter-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .hs-filter-btn.active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
+    }
+
+    /* Lista de comunicados (estética alineada a incidencias.html) */
+    .hs-com-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .hs-com-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-primary);
+      border-radius: 14px;
+      padding: 20px 22px;
+    }
+
+    .hs-com-card.cat-corte {
+      border-left-color: #F59E0B;
+    }
+
+    .hs-com-card.cat-cuotas {
+      border-left-color: #087F8C;
+    }
+
+    .hs-com-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .hs-com-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .hs-com-meta-code {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 0.03em;
+    }
+
+    .hs-com-title-wrap h2 {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+
+    .hs-com-author {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+    }
+
+    .hs-cat-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #E7F0FF;
+      color: #123A52;
+    }
+
+    .hs-cat-tag.is-corte {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .hs-cat-tag.is-cuotas {
+      background: #E9F7F6;
+      color: #087F8C;
+    }
+
+    .hs-com-body {
+      background: #F8F9FA;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 13px 15px;
+      font-size: 0.91rem;
+      color: var(--color-dark);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      white-space: pre-line;
+    }
+
+    /* Adjuntos dentro de la tarjeta del comunicado */
+    .hs-com-attachments {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .hs-attachment-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #EDF4FF;
+      border: 1px solid #AFC4D2;
+      color: #123A52;
+      font-size: 0.81rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .hs-attachment-chip:hover {
+      background: #E7F0FF;
+      border-color: var(--color-primary);
+    }
+
+    .hs-attachment-preview-img {
+      max-width: 240px;
+      max-height: 140px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      display: block;
+      margin-top: 6px;
+    }
+
+    .hs-com-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .hs-com-stats {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.83rem;
+      color: var(--color-text-muted);
+      font-weight: 600;
+    }
+
+    .hs-stat-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hs-like-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: #FFFFFF;
+      color: var(--color-dark);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .hs-like-btn:hover,
+    .hs-like-btn.is-liked {
+      border-color: var(--color-primary);
+      background: #E7F0FF;
+      color: var(--color-primary);
+    }
+
+    .hs-com-card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Panel desplegable para Emitir Comunicado o Registrar Incidente */
+    .hs-drawer-panel {
+      background: var(--color-bg-card);
+      border: 1.5px solid var(--color-primary);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+
+    .hs-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .hs-drawer-header h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--color-dark);
+    }
+
+    .hs-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .hs-form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hs-form-field.is-full {
+      grid-column: 1 / -1;
+    }
+
+    .hs-form-field label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+
+    .hs-form-field input[type="text"],
+    .hs-form-field select,
+    .hs-form-field textarea {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: var(--color-dark);
+      background: #FFFFFF;
+    }
+
+    .hs-form-field textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    /* Barra de herramientas de redacción (Emojis y Adjuntar archivo) */
+    .hs-editor-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 8px 10px;
+      background: #F8F9FA;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+    }
+
+    .hs-emoji-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .hs-emoji-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: #FFFFFF;
+      font-size: 1.05rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.12s ease;
+    }
+
+    .hs-emoji-btn:hover {
+      border-color: var(--color-primary);
+      background: #E7F0FF;
+    }
+
+    .hs-file-upload-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: #FFFFFF;
+      color: var(--color-dark);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .hs-file-upload-label:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .hs-pending-files {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .hs-pending-file-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #E7F0FF;
+      color: #123A52;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .hs-pending-file-remove {
+      background: none;
+      border: none;
+      color: #123A52;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 2px;
+    }
+
+    @media (max-width: 720px) {
+      .hs-form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    body.is-accessible .hs-com-card,
+    body.is-accessible .hs-drawer-panel {
+      border: 2px solid #000000 !important;
+      background: #FFFFFF !important;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!-- Topbar consistente con pantallas secundarias -->
+  <header class="hs-topbar">
+    <a href="../index.html#panel-lider" class="hs-brand" aria-label="HydroSense Inicio">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+      </svg>
+      <span>HydroSense</span>
+    </a>
+
+    <label class="hs-access-toggle" for="toggle-modo-accesible">
+      <span>Modo Accesible</span>
+      <input type="checkbox" id="toggle-modo-accesible" role="switch" aria-label="Activar modo accesible con texto ampliado y alto contraste" />
+    </label>
+  </header>
+
+  <!-- Subnav del Líder Comunitario (con Alertas intacto) -->
+  <nav class="hs-subnav" aria-label="Navegación del panel comunitario">
+    <a href="../index.html#panel-lider" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Inicio</span>
+    </a>
+    <a href="monitoreo.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <span>Gestión</span>
+    </a>
+    <a href="incidencias.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <span>Incidencias</span>
+    </a>
+    <a href="medidores.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+      </svg>
+      <span>Medidores</span>
+    </a>
+    <a href="comunicados.html" class="hs-nav-item active" aria-current="page">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span>Comunicados</span>
+    </a>
+  </nav>
+
+  <main id="contenido-principal" class="hs-container">
+    <div class="hs-com-header">
+      <div>
+        <span class="eyebrow">COMUNICACIÓN VECINAL Y DIFUSIÓN</span>
+        <h1>Difusión de Comunicados</h1>
+        <p>Emite avisos oficiales con archivos y emojis para los 24 hogares, revisa el alcance de lectura y difunde por WhatsApp.</p>
+      </div>
+
+      <!-- Botón principal "Emitir comunicado" + acciones trasladadas desde monitoreo.html -->
+      <div class="hs-com-actions-top">
+        <button type="button" class="btn btn-primary btn-sm" id="btnToggleNewCom">📢 Emitir comunicado</button>
+        <button type="button" class="btn btn-outline btn-sm" id="btnDifundirWhatsappGlobal">Difundir por WhatsApp</button>
+        <button type="button" class="btn btn-outline btn-sm" id="btnToggleRegIncidente">Registrar incidente</button>
+      </div>
+    </div>
+
+    <!-- Formulario desplegable: Emitir Comunicado (con Emojis y Archivos adjuntos) -->
+    <section id="drawerNewComunicado" class="hs-drawer-panel" hidden>
+      <div class="hs-drawer-header">
+        <h2>📢 Emitir nuevo comunicado vecinal</h2>
+        <button type="button" class="btn btn-outline btn-sm" id="btnCloseNewCom">Cerrar</button>
+      </div>
+      <form id="formNewComunicado">
+        <div class="hs-form-grid">
+          <div class="hs-form-field">
+            <label for="comTitulo">Título del comunicado</label>
+            <input type="text" id="comTitulo" required placeholder="Ej. Limpieza programada de cisterna principal" />
+          </div>
+          <div class="hs-form-field">
+            <label for="comCategoria">Categoría</label>
+            <select id="comCategoria">
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Corte programado">Corte programado</option>
+              <option value="Cuotas vecinales">Cuotas vecinales</option>
+              <option value="Ahorro comunitario">Ahorro comunitario</option>
+            </select>
+          </div>
+          <div class="hs-form-field is-full">
+            <label for="comMensaje">Mensaje para los vecinos</label>
+            <textarea id="comMensaje" required placeholder="Escribe los detalles, horarios y recomendaciones para los residentes..."></textarea>
+
+            <!-- Barra de emojis y adjuntar archivos -->
+            <div class="hs-editor-toolbar">
+              <div class="hs-emoji-bar" aria-label="Insertar emoji rápido">
+                <span style="font-size:0.78rem; color:var(--color-text-muted); margin-right:4px;">Emojis:</span>
+                <button type="button" class="hs-emoji-btn" data-emoji="💧" title="Agua">💧</button>
+                <button type="button" class="hs-emoji-btn" data-emoji="📢" title="Aviso">📢</button>
+                <button type="button" class="hs-emoji-btn" data-emoji="⚠️" title="Precaución">⚠️</button>
+                <button type="button" class="hs-emoji-btn" data-emoji="🔧" title="Mantenimiento">🔧</button>
+                <button type="button" class="hs-emoji-btn" data-emoji="📅" title="Fecha">📅</button>
+                <button type="button" class="hs-emoji-btn" data-emoji="⏰" title="Horario">⏰</button>
+                <button type="button" class="hs-emoji-btn" data-emoji="✅" title="Confirmado">✅</button>
+                <button type="button" class="hs-emoji-btn" data-emoji="👏" title="Aplauso">👏</button>
+              </div>
+
+              <div>
+                <label for="comArchivos" class="hs-file-upload-label">
+                  📎 Adjuntar archivo o imagen
+                </label>
+                <input type="file" id="comArchivos" multiple accept=".pdf,.doc,.docx,.xlsx,.png,.jpg,.jpeg" hidden />
+              </div>
+            </div>
+
+            <div id="pendingFilesList" class="hs-pending-files" aria-live="polite"></div>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="submit" class="btn btn-primary btn-sm">Enviar y publicar en histórico</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Formulario desplegable: Registrar Incidente (trasladado desde monitoreo.html) -->
+    <section id="drawerRegIncidente" class="hs-drawer-panel" hidden>
+      <div class="hs-drawer-header">
+        <h2>Registrar incidente comunitario</h2>
+        <button type="button" class="btn btn-outline btn-sm" id="btnCloseRegInc">Cerrar</button>
+      </div>
+      <form id="formRegIncidente">
+        <div class="hs-form-grid">
+          <div class="hs-form-field">
+            <label for="incUbicacion">Ubicación / Punto afectado</label>
+            <input type="text" id="incUbicacion" required placeholder="Ej. Válvula de ingreso principal · Edificio B" />
+          </div>
+          <div class="hs-form-field">
+            <label for="incMotivo">Tipo de incidente</label>
+            <select id="incMotivo">
+              <option value="Fuga de agua o tubería rota">Fuga de agua o tubería rota</option>
+              <option value="Baja presión en el suministro">Baja presión en el suministro</option>
+              <option value="Corte de agua no programado">Corte de agua no programado</option>
+              <option value="Agua turbia o con olor extraño">Agua turbia o con olor extraño</option>
+              <option value="Falla o lectura irregular en medidor IoT">Falla o lectura irregular en medidor IoT</option>
+            </select>
+          </div>
+          <div class="hs-form-field is-full">
+            <label for="incDetalle">Descripción técnica o acción tomada</label>
+            <textarea id="incDetalle" required placeholder="Describe lo ocurrido para dejar constancia en el panel de incidencias..."></textarea>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="submit" class="btn btn-primary btn-sm">Guardar en Panel de Incidencias</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- KPIs de interacción comunitaria -->
+    <div class="hs-com-kpis" aria-label="Estadísticas de comunicados">
+      <span class="hs-kpi-pill">📢 <strong id="kpiTotalCom">4</strong> Comunicados emitidos</span>
+      <span class="hs-kpi-pill">👁️ <strong id="kpiAvgViews">89%</strong> Lectura promedio (21/24 hogares)</span>
+      <span class="hs-kpi-pill">👍 <strong id="kpiTotalLikes">68</strong> Reacciones vecinales</span>
+    </div>
+
+    <!-- Barra de filtros por categoría -->
+    <div class="hs-com-toolbar" role="region" aria-label="Filtrar comunicados por categoría">
+      <div class="hs-filter-group" id="comCategoryFilterGroup">
+        <button type="button" class="hs-filter-btn active" data-cat="all">Todos</button>
+        <button type="button" class="hs-filter-btn" data-cat="Mantenimiento">Mantenimiento</button>
+        <button type="button" class="hs-filter-btn" data-cat="Corte programado">Corte programado</button>
+        <button type="button" class="hs-filter-btn" data-cat="Cuotas vecinales">Cuotas vecinales</button>
+        <button type="button" class="hs-filter-btn" data-cat="Ahorro comunitario">Ahorro comunitario</button>
+      </div>
+    </div>
+
+    <!-- Histórico de comunicados emitidos por el líder -->
+    <section id="comunicadosList" class="hs-com-list" aria-live="polite"></section>
+  </main>
+
+  <!-- Toast y Asistente por Voz -->
+  <div id="voice-toast" class="voice-toast" role="status" aria-live="polite" hidden></div>
+  <button id="btn-asistente-voz" class="fab-voice" type="button" aria-label="Consultar consumo mediante comandos de voz" title="Asistente por voz">
+    <span aria-hidden="true">🎤</span>
+  </button>
+
+  <script src="../js/hydrosense-views.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const COM_STORAGE_KEY = 'hydrosense_comunicados_v2';
+      const INC_STORAGE_KEY = 'hydrosense_incidencias_comunidad_v1';
+
+      const DEFAULT_COMUNICADOS = [
+        {
+          id: 'COM-2026-008',
+          date: '27 Nov 2026 · 09:10 h',
+          author: 'Líder Comunitario',
+          category: 'Corte programado',
+          title: '⚠️ Corte preventivo por desinfección de cisterna y tanque elevado',
+          body: 'Estimados vecinos 💧, este sábado 29 de noviembre de 08:00 a. m. a 11:30 a. m. ⏰ se suspenderá temporalmente el suministro en las Torres A, B y C para realizar la limpieza semestral de la cisterna principal. Recomendamos almacenar agua con anticipación.',
+          attachments: [
+            { name: 'Cronograma_Limpieza_Cisterna_Nov2026.pdf', size: '245 KB', isImage: false, dataUrl: '' }
+          ],
+          views: 23,
+          totalHomes: 24,
+          likes: 19,
+          likedByMe: false
+        },
+        {
+          id: 'COM-2026-007',
+          date: '24 Nov 2026 · 17:45 h',
+          author: 'Líder Comunitario',
+          category: 'Ahorro comunitario',
+          title: '👏 ¡Logramos 85% de hogares en rango de ahorro este mes!',
+          body: 'Gracias al monitoreo con los 24 medidores IoT ✅, el condominio redujo su consumo colectivo a 450 m³, generando un ahorro estimado de S/ 310.00 en el recibo común. Sigamos revisando los empaques de duchas e inodoros.',
+          attachments: [],
+          views: 24,
+          totalHomes: 24,
+          likes: 24,
+          likedByMe: true
+        },
+        {
+          id: 'COM-2026-006',
+          date: '21 Nov 2026 · 14:20 h',
+          author: 'Líder Comunitario',
+          category: 'Mantenimiento',
+          title: '🔧 Ajuste preventivo en válvula de ingreso principal completado',
+          body: 'El comité técnico culminó la calibración de la válvula de ingreso principal y la revisión de presión en el Edificio B. Si algún departamento percibe aire en las tuberías, abrir el caño más cercano por 15 segundos.',
+          attachments: [
+            { name: 'Acta_Mantenimiento_Valvula_B.pdf', size: '180 KB', isImage: false, dataUrl: '' }
+          ],
+          views: 21,
+          totalHomes: 24,
+          likes: 14,
+          likedByMe: false
+        },
+        {
+          id: 'COM-2026-005',
+          date: '16 Nov 2026 · 10:00 h',
+          author: 'Líder Comunitario',
+          category: 'Cuotas vecinales',
+          title: '📅 Recordatorio de cuota mensual de mantenimiento sanitario (Noviembre)',
+          body: 'Se recuerda a los residentes que el aporte mensual para fondo de mantenimiento de bombas y sensores IoT vence el día 30. Pueden consultar el balance actualizado en la pestaña Gestión.',
+          attachments: [],
+          views: 19,
+          totalHomes: 24,
+          likes: 11,
+          likedByMe: false
+        }
+      ];
+
+      function loadComunicados() {
+        try {
+          const raw = localStorage.getItem(COM_STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          }
+        } catch (e) {}
+        return DEFAULT_COMUNICADOS;
+      }
+
+      function saveComunicados(list) {
+        try {
+          localStorage.setItem(COM_STORAGE_KEY, JSON.stringify(list));
+        } catch (e) {}
+      }
+
+      let comunicados = loadComunicados();
+      let currentCat = 'all';
+      let pendingFiles = [];
+
+      function showToast(msg) {
+        const toast = document.getElementById('voice-toast');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.hidden = false;
+        clearTimeout(window.__hsComToastTimer);
+        window.__hsComToastTimer = setTimeout(() => {
+          toast.hidden = true;
+        }, 3400);
+      }
+
+      function updateKPIs() {
+        document.getElementById('kpiTotalCom').textContent = comunicados.length;
+        const totalLikes = comunicados.reduce((acc, c) => acc + c.likes, 0);
+        document.getElementById('kpiTotalLikes').textContent = totalLikes;
+
+        const avgViews = comunicados.length
+          ? Math.round(comunicados.reduce((acc, c) => acc + c.views, 0) / comunicados.length)
+          : 0;
+        const avgPct = Math.round((avgViews / 24) * 100);
+        document.getElementById('kpiAvgViews').textContent = `${avgPct}% (${avgViews}/24 hogares)`;
+      }
+
+      function getCategoryClass(cat) {
+        if (cat === 'Corte programado') return 'corte';
+        if (cat === 'Cuotas vecinales') return 'cuotas';
+        return 'general';
+      }
+
+      function shareToWhatsApp(item) {
+        const attachText = item.attachments && item.attachments.length
+          ? `%0A📎 Adjunto: ${encodeURIComponent(item.attachments.map(a => a.name).join(', '))}`
+          : '';
+        const text = `*HydroSense · Comunicado Vecinal*%0A*${encodeURIComponent(item.title)}*%0A_${encodeURIComponent(item.category)} · ${encodeURIComponent(item.date)}_%0A%0A${encodeURIComponent(item.body)}${attachText}`;
+        window.open(`https://wa.me/?text=${text}`, '_blank', 'noopener,noreferrer');
+      }
+
+      function renderAttachments(attachments) {
+        if (!attachments || attachments.length === 0) return '';
+        return `
+          <div class="hs-com-attachments">
+            ${attachments.map(att => {
+              if (att.isImage && att.dataUrl) {
+                return `
+                  <div>
+                    <a href="${att.dataUrl}" download="${att.name}" class="hs-attachment-chip">🖼️ ${att.name} (${att.size})</a>
+                    <img src="${att.dataUrl}" alt="${att.name}" class="hs-attachment-preview-img" />
+                  </div>
+                `;
+              }
+              if (att.dataUrl) {
+                return `<a href="${att.dataUrl}" download="${att.name}" class="hs-attachment-chip">📄 ${att.name} (${att.size})</a>`;
+              }
+              return `<span class="hs-attachment-chip">📄 ${att.name} (${att.size})</span>`;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      function renderComunicados() {
+        updateKPIs();
+        const listEl = document.getElementById('comunicadosList');
+        const filtered = comunicados.filter(c => currentCat === 'all' || c.category === currentCat);
+
+        listEl.innerHTML = filtered.map(item => {
+          const catSlug = getCategoryClass(item.category);
+          const pctViews = Math.round((item.views / item.totalHomes) * 100);
+
+          return `
+            <article class="hs-com-card cat-${catSlug}">
+              <div class="hs-com-top">
+                <div class="hs-com-title-wrap">
+                  <span class="hs-com-meta-code">${item.id} · Enviado: ${item.date}</span>
+                  <h2>${item.title}</h2>
+                  <span class="hs-com-author">Emitido por: ${item.author}</span>
+                </div>
+                <span class="hs-cat-tag is-${catSlug}">${item.category}</span>
+              </div>
+
+              <div class="hs-com-body">${item.body}</div>
+
+              ${renderAttachments(item.attachments)}
+
+              <div class="hs-com-footer">
+                <div class="hs-com-stats">
+                  <span class="hs-stat-item" title="Hogares que abrieron el comunicado">
+                    👁️ ${item.views}/${item.totalHomes} visualizaciones (${pctViews}%)
+                  </span>
+                  <button type="button" class="hs-like-btn ${item.likedByMe ? 'is-liked' : ''}" data-like-id="${item.id}" aria-pressed="${item.likedByMe}">
+                    👍 <span>${item.likes} Me gusta</span>
+                  </button>
+                </div>
+
+                <div class="hs-com-card-actions">
+                  <button type="button" class="btn btn-outline btn-sm" data-wa-id="${item.id}">Reenviar por WhatsApp</button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        document.querySelectorAll('[data-like-id]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.likeId;
+            const target = comunicados.find(c => c.id === id);
+            if (!target) return;
+            target.likedByMe = !target.likedByMe;
+            target.likes += target.likedByMe ? 1 : -1;
+            saveComunicados(comunicados);
+            renderComunicados();
+          });
+        });
+
+        document.querySelectorAll('[data-wa-id]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const target = comunicados.find(c => c.id === btn.dataset.waId);
+            if (target) shareToWhatsApp(target);
+          });
+        });
+      }
+
+      // Inserción de emojis en el textarea
+      const msgTextarea = document.getElementById('comMensaje');
+      document.querySelectorAll('.hs-emoji-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const emoji = btn.dataset.emoji;
+          const start = msgTextarea.selectionStart || msgTextarea.value.length;
+          const end = msgTextarea.selectionEnd || msgTextarea.value.length;
+          msgTextarea.value = msgTextarea.value.slice(0, start) + emoji + msgTextarea.value.slice(end);
+          msgTextarea.focus();
+          msgTextarea.selectionStart = msgTextarea.selectionEnd = start + emoji.length;
+        });
+      });
+
+      // Gestión de archivos adjuntos seleccionados
+      const fileInput = document.getElementById('comArchivos');
+      const pendingFilesList = document.getElementById('pendingFilesList');
+
+      function renderPendingFiles() {
+        pendingFilesList.innerHTML = pendingFiles.map((f, idx) => `
+          <span class="hs-pending-file-item">
+            📎 ${f.name} (${f.size})
+            <button type="button" class="hs-pending-file-remove" data-remove-file="${idx}" aria-label="Quitar archivo">×</button>
+          </span>
+        `).join('');
+
+        document.querySelectorAll('[data-remove-file]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            pendingFiles.splice(Number(btn.dataset.removeFile), 1);
+            renderPendingFiles();
+          });
+        });
+      }
+
+      fileInput.addEventListener('change', () => {
+        const files = Array.from(fileInput.files || []);
+        files.forEach(file => {
+          const sizeKB = Math.max(1, Math.round(file.size / 1024)) + ' KB';
+          const isImage = file.type.startsWith('image/');
+          const reader = new FileReader();
+          reader.onload = () => {
+            pendingFiles.push({
+              name: file.name,
+              size: sizeKB,
+              isImage,
+              dataUrl: typeof reader.result === 'string' && reader.result.length < 400000 ? reader.result : ''
+            });
+            renderPendingFiles();
+          };
+          reader.readAsDataURL(file);
+        });
+        fileInput.value = '';
+      });
+
+      // Filtros de categoría
+      document.querySelectorAll('#comCategoryFilterGroup .hs-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#comCategoryFilterGroup .hs-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCat = btn.dataset.cat;
+          renderComunicados();
+        });
+      });
+
+      // Drawers desplegables
+      const drawerCom = document.getElementById('drawerNewComunicado');
+      const drawerInc = document.getElementById('drawerRegIncidente');
+
+      // Si viene desde el botón "Emitir Comunicado" de index.html (?compose=1), abrir el formulario listo para escribir
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('compose') === '1') {
+        drawerCom.hidden = false;
+      }
+
+      document.getElementById('btnToggleNewCom').addEventListener('click', () => {
+        drawerInc.hidden = true;
+        drawerCom.hidden = !drawerCom.hidden;
+      });
+      document.getElementById('btnCloseNewCom').addEventListener('click', () => {
+        drawerCom.hidden = true;
+      });
+
+      document.getElementById('btnToggleRegIncidente').addEventListener('click', () => {
+        drawerCom.hidden = true;
+        drawerInc.hidden = !drawerInc.hidden;
+      });
+      document.getElementById('btnCloseRegInc').addEventListener('click', () => {
+        drawerInc.hidden = true;
+      });
+
+      // Botón superior Difundir por WhatsApp
+      document.getElementById('btnDifundirWhatsappGlobal').addEventListener('click', () => {
+        if (comunicados.length > 0) {
+          shareToWhatsApp(comunicados[0]);
+        }
+      });
+
+      // Guardar nuevo comunicado y mostrarlo al inicio del histórico
+      document.getElementById('formNewComunicado').addEventListener('submit', e => {
+        e.preventDefault();
+        const title = document.getElementById('comTitulo').value.trim();
+        const category = document.getElementById('comCategoria').value;
+        const body = document.getElementById('comMensaje').value.trim();
+        if (!title || !body) return;
+
+        const nextNum = String(comunicados.length + 5).padStart(3, '0');
+        comunicados.unshift({
+          id: `COM-2026-${nextNum}`,
+          date: 'Hoy · recién enviado',
+          author: 'Líder Comunitario',
+          category,
+          title,
+          body,
+          attachments: [...pendingFiles],
+          views: 1,
+          totalHomes: 24,
+          likes: 1,
+          likedByMe: true
+        });
+        saveComunicados(comunicados);
+        pendingFiles = [];
+        renderPendingFiles();
+        e.target.reset();
+        drawerCom.hidden = true;
+        renderComunicados();
+        showToast('Comunicado emitido y guardado en el histórico.');
+      });
+
+      // Guardar incidente y sincronizarlo con incidencias.html
+      document.getElementById('formRegIncidente').addEventListener('submit', e => {
+        e.preventDefault();
+        const unit = document.getElementById('incUbicacion').value.trim();
+        const motive = document.getElementById('incMotivo').value;
+        const message = document.getElementById('incDetalle').value.trim();
+        if (!unit || !message) return;
+
+        try {
+          const raw = localStorage.getItem(INC_STORAGE_KEY);
+          const existing = raw ? JSON.parse(raw) : [];
+          existing.unshift({
+            id: `INC-2026-${Math.floor(15 + Math.random() * 80)}`,
+            neighbor: 'Reporte de Líder Comunitario',
+            unit,
+            date: 'Hoy · recién registrado',
+            motive,
+            message,
+            status: 'Pendiente'
+          });
+          localStorage.setItem(INC_STORAGE_KEY, JSON.stringify(existing));
+        } catch (err) {}
+
+        e.target.reset();
+        drawerInc.hidden = true;
+        showToast('Incidente registrado y enviado al Panel de Incidencias.');
+      });
+
+      renderComunicados();
+    });
+  </script>
+</body>
+</html>

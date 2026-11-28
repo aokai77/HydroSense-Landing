@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Panel de Incidencias y Fugas del Condominio — HydroSense" />
+  <title>Panel de Incidencias — HydroSense</title>
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/hydrosense-views.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    /* Estilos específicos de Panel de Incidencias (pages/incidencias.html) */
+    .hs-inc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .hs-inc-header h1 {
+      margin: 4px 0 6px;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+
+    .hs-inc-header p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+    }
+
+    .hs-inc-kpis {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .hs-kpi-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--color-dark);
+    }
+
+    .hs-kpi-pill .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .hs-kpi-pill .dot.is-pending { background: #F59E0B; }
+    .hs-kpi-pill .dot.is-progress { background: #1262D5; }
+    .hs-kpi-pill .dot.is-resolved { background: #10B981; }
+
+    /* Barra de filtros y búsqueda */
+    .hs-inc-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .hs-filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hs-filter-btn {
+      min-height: 38px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-card);
+      color: var(--color-text-muted);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .hs-filter-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .hs-filter-btn.active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
+    }
+
+    .hs-inc-select {
+      min-height: 38px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-card);
+      color: var(--color-dark);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 500;
+    }
+
+    /* Lista de tarjetas de incidencias */
+    .hs-inc-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .hs-inc-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid #F59E0B;
+      border-radius: 14px;
+      padding: 20px 22px;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .hs-inc-card.status-en-revision {
+      border-left-color: #1262D5;
+    }
+
+    .hs-inc-card.status-resuelto {
+      border-left-color: #10B981;
+      opacity: 0.92;
+    }
+
+    .hs-inc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .hs-inc-neighbor {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .hs-inc-code {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 0.03em;
+    }
+
+    .hs-inc-neighbor h2 {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+
+    .hs-inc-meta {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+    }
+
+    .hs-inc-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hs-motive-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: #E7F0FF;
+      color: #123A52;
+    }
+
+    .hs-state-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .hs-state-pill.is-pendiente {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .hs-state-pill.is-en-revision {
+      background: #DBEAFE;
+      color: #1E40AF;
+    }
+
+    .hs-state-pill.is-resuelto {
+      background: #E9F7F6;
+      color: #087F8C;
+    }
+
+    .hs-inc-message {
+      background: #F8F9FA;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      color: var(--color-dark);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .hs-inc-message.is-empty {
+      font-style: italic;
+      color: var(--color-text-muted);
+    }
+
+    .hs-inc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .hs-inc-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hs-inc-actions label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    .hs-inc-empty {
+      text-align: center;
+      padding: 36px 20px;
+      background: var(--color-bg-card);
+      border: 1px dashed var(--color-border);
+      border-radius: 14px;
+      color: var(--color-text-muted);
+    }
+
+    /* Modo accesible */
+    body.is-accessible .hs-inc-card {
+      border: 2px solid #000000 !important;
+      background: #FFFFFF !important;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!-- Topbar consistente con pantallas secundarias -->
+  <header class="hs-topbar">
+    <a href="../index.html#panel-lider" class="hs-brand" aria-label="HydroSense Inicio">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+      </svg>
+      <span>HydroSense</span>
+    </a>
+
+    <label class="hs-access-toggle" for="toggle-modo-accesible">
+      <span>Modo Accesible</span>
+      <input type="checkbox" id="toggle-modo-accesible" role="switch" aria-label="Activar modo accesible con texto ampliado y alto contraste" />
+    </label>
+  </header>
+
+  <!-- Subnav del Líder Comunitario -->
+  <nav class="hs-subnav" aria-label="Navegación del panel comunitario">
+    <a href="../index.html#panel-lider" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Inicio</span>
+    </a>
+    <a href="monitoreo.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <span>Gestión</span>
+    </a>
+    <a href="incidencias.html" class="hs-nav-item active" aria-current="page">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <span>Incidencias</span>
+    </a>
+    <a href="medidores.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+      </svg>
+      <span>Medidores</span>
+    </a>
+    <a href="comunicados.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span>Comunicados</span>
+    </a>
+  </nav>
+
+  <main id="contenido-principal" class="hs-container">
+    <div class="hs-inc-header">
+      <div>
+        <span class="eyebrow">ATENCIÓN VECINAL Y MANTENIMIENTO</span>
+        <h1>Panel de Incidencias y Fugas</h1>
+        <p>Revisa los reportes enviados por los vecinos del condominio y actualiza el estado de atención de cada caso.</p>
+      </div>
+      <div class="hs-inc-kpis" aria-label="Resumen de estados">
+        <span class="hs-kpi-pill"><span class="dot is-pending"></span> <strong id="kpiPendiente">2</strong> Pendientes</span>
+        <span class="hs-kpi-pill"><span class="dot is-progress"></span> <strong id="kpiRevision">1</strong> En revisión</span>
+        <span class="hs-kpi-pill"><span class="dot is-resolved"></span> <strong id="kpiResuelto">3</strong> Resueltos</span>
+      </div>
+    </div>
+
+    <!-- Barra de filtros por estado y motivo -->
+    <div class="hs-inc-toolbar" role="region" aria-label="Filtros de incidencias">
+      <div class="hs-filter-group" id="statusFilterGroup">
+        <button type="button" class="hs-filter-btn active" data-status="all">Todos</button>
+        <button type="button" class="hs-filter-btn" data-status="Pendiente">Pendiente</button>
+        <button type="button" class="hs-filter-btn" data-status="En revisión">En revisión</button>
+        <button type="button" class="hs-filter-btn" data-status="Resuelto">Resuelto</button>
+      </div>
+
+      <div>
+        <label for="motiveFilterSelect" class="sr-only">Filtrar por motivo</label>
+        <select id="motiveFilterSelect" class="hs-inc-select" aria-label="Filtrar por motivo de incidencia">
+          <option value="all">Todos los motivos</option>
+          <option value="Fuga de agua o tubería rota">Fuga de agua o tubería rota</option>
+          <option value="Baja presión en el suministro">Baja presión en el suministro</option>
+          <option value="Corte de agua no programado">Corte de agua no programado</option>
+          <option value="Agua turbia o con olor extraño">Agua turbia o con olor extraño</option>
+          <option value="Falla o lectura irregular en medidor IoT">Falla o lectura irregular en medidor IoT</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Contenedor dinámico de tarjetas de incidencias -->
+    <section id="incidenciasList" class="hs-inc-list" aria-live="polite"></section>
+  </main>
+
+  <!-- Toast de confirmación + Asistente por Voz -->
+  <div id="voice-toast" class="voice-toast" role="status" aria-live="polite" hidden></div>
+  <button id="btn-asistente-voz" class="fab-voice" type="button" aria-label="Consultar consumo mediante comandos de voz" title="Asistente por voz">
+    <span aria-hidden="true">🎤</span>
+  </button>
+
+  <script src="../js/hydrosense-views.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const STORAGE_KEY = 'hydrosense_incidencias_comunidad_v1';
+
+      const DEFAULT_INCIDENTS = [
+        {
+          id: 'INC-2026-014',
+          neighbor: 'Fam. Salazar Vega',
+          unit: 'Edificio A · Dpto. A-301',
+          date: 'Hoy, 09:42 h',
+          motive: 'Fuga de agua o tubería rota',
+          message: 'Se observa filtración constante en la llave de paso del pasadizo del tercer piso, cerca al ducto principal.',
+          status: 'Pendiente'
+        },
+        {
+          id: 'INC-2026-013',
+          neighbor: 'Fam. Delgado Ponce',
+          unit: 'Edificio C · Dpto. C-201',
+          date: 'Hoy, 08:15 h',
+          motive: 'Baja presión en el suministro',
+          message: 'Desde las 7:00 a. m. el flujo en la ducha y lavadero cayó bastante respecto a lo habitual.',
+          status: 'Pendiente'
+        },
+        {
+          id: 'INC-2026-012',
+          neighbor: 'Fam. Gutiérrez Soto',
+          unit: 'Edificio B · Dpto. B-101',
+          date: 'Ayer, 18:30 h',
+          motive: 'Falla o lectura irregular en medidor IoT',
+          message: 'El sensor HS-EB-101 marcó 15 litros adicionales mientras estábamos fuera de casa; por favor revisar calibración.',
+          status: 'En revisión'
+        },
+        {
+          id: 'INC-2026-011',
+          neighbor: 'Sra. Elena Aguilar',
+          unit: 'Edificio C · Dpto. C-102',
+          date: '25 Nov, 14:10 h',
+          motive: 'Agua turbia o con olor extraño',
+          message: '',
+          status: 'Resuelto'
+        },
+        {
+          id: 'INC-2026-010',
+          neighbor: 'Sr. Diego Morales',
+          unit: 'Edificio B · Dpto. B-201',
+          date: '23 Nov, 11:05 h',
+          motive: 'Corte de agua no programado',
+          message: 'Hubo interrupción de 25 minutos durante el mantenimiento de la bomba de cisterna.',
+          status: 'Resuelto'
+        },
+        {
+          id: 'INC-2026-009',
+          neighbor: 'Fam. Castillo Ruiz',
+          unit: 'Edificio A · Dpto. A-401',
+          date: '20 Nov, 16:48 h',
+          motive: 'Fuga de agua o tubería rota',
+          message: 'Goteo en válvula de jardín lateral del Edificio A.',
+          status: 'Resuelto'
+        }
+      ];
+
+      function loadIncidents() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          }
+        } catch (e) {}
+        return DEFAULT_INCIDENTS;
+      }
+
+      function saveIncidents(list) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        } catch (e) {}
+      }
+
+      let incidents = loadIncidents();
+      let filterStatus = 'all';
+      let filterMotive = 'all';
+
+      const listEl = document.getElementById('incidenciasList');
+
+      function updateKPIs() {
+        const pendientes = incidents.filter(i => i.status === 'Pendiente').length;
+        const revision = incidents.filter(i => i.status === 'En revisión').length;
+        const resueltos = incidents.filter(i => i.status === 'Resuelto').length;
+
+        document.getElementById('kpiPendiente').textContent = pendientes;
+        document.getElementById('kpiRevision').textContent = revision;
+        document.getElementById('kpiResuelto').textContent = resueltos;
+      }
+
+      function getStatusSlug(status) {
+        if (status === 'Resuelto') return 'resuelto';
+        if (status === 'En revisión') return 'en-revision';
+        return 'pendiente';
+      }
+
+      function showToast(msg) {
+        const toast = document.getElementById('voice-toast');
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.hidden = false;
+        clearTimeout(window.__hsIncToastTimer);
+        window.__hsIncToastTimer = setTimeout(() => {
+          toast.hidden = true;
+        }, 3200);
+      }
+
+      function renderIncidents() {
+        updateKPIs();
+
+        const filtered = incidents.filter(item => {
+          const matchStatus = filterStatus === 'all' || item.status === filterStatus;
+          const matchMotive = filterMotive === 'all' || item.motive === filterMotive;
+          return matchStatus && matchMotive;
+        });
+
+        if (filtered.length === 0) {
+          listEl.innerHTML = `
+            <div class="hs-inc-empty">
+              No hay incidencias registradas que coincidan con los filtros seleccionados.
+            </div>
+          `;
+          return;
+        }
+
+        listEl.innerHTML = filtered.map(item => {
+          const slug = getStatusSlug(item.status);
+          const hasMessage = item.message && item.message.trim().length > 0;
+
+          return `
+            <article class="hs-inc-card status-${slug}" data-inc-id="${item.id}">
+              <div class="hs-inc-top">
+                <div class="hs-inc-neighbor">
+                  <span class="hs-inc-code">${item.id} · ${item.date}</span>
+                  <h2>${item.neighbor}</h2>
+                  <span class="hs-inc-meta">${item.unit}</span>
+                </div>
+
+                <div class="hs-inc-badges">
+                  <span class="hs-motive-tag">${item.motive}</span>
+                  <span class="hs-state-pill is-${slug}">${item.status}</span>
+                </div>
+              </div>
+
+              <div class="hs-inc-message ${hasMessage ? '' : 'is-empty'}">
+                ${hasMessage ? item.message : 'El vecino no adjuntó un mensaje adicional en este reporte.'}
+              </div>
+
+              <div class="hs-inc-footer">
+                <div class="hs-inc-actions">
+                  <label for="select-status-${item.id}">Estado del reporte:</label>
+                  <select id="select-status-${item.id}" class="hs-inc-select" data-change-status="${item.id}">
+                    <option value="Pendiente" ${item.status === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                    <option value="En revisión" ${item.status === 'En revisión' ? 'selected' : ''}>En revisión</option>
+                    <option value="Resuelto" ${item.status === 'Resuelto' ? 'selected' : ''}>Resuelto</option>
+                  </select>
+                </div>
+
+                ${item.status !== 'Resuelto'
+                  ? `<button type="button" class="btn btn-primary btn-sm" data-quick-resolve="${item.id}">Marcar como resuelto</button>`
+                  : `<span style="font-size:0.82rem; font-weight:600; color:#087F8C;">✓ Caso cerrado</span>`
+                }
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        // Eventos de cambio de estado
+        document.querySelectorAll('[data-change-status]').forEach(sel => {
+          sel.addEventListener('change', e => {
+            const id = e.target.dataset.changeStatus;
+            const newStatus = e.target.value;
+            const target = incidents.find(i => i.id === id);
+            if (target) {
+              target.status = newStatus;
+              saveIncidents(incidents);
+              renderIncidents();
+              showToast(`Reporte ${id} actualizado a "${newStatus}".`);
+            }
+          });
+        });
+
+        document.querySelectorAll('[data-quick-resolve]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.quickResolve;
+            const target = incidents.find(i => i.id === id);
+            if (target) {
+              target.status = 'Resuelto';
+              saveIncidents(incidents);
+              renderIncidents();
+              showToast(`Incidencia ${id} marcada como Resuelta.`);
+            }
+          });
+        });
+      }
+
+      document.querySelectorAll('#statusFilterGroup .hs-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#statusFilterGroup .hs-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filterStatus = btn.dataset.status;
+          renderIncidents();
+        });
+      });
+
+      document.getElementById('motiveFilterSelect').addEventListener('change', e => {
+        filterMotive = e.target.value;
+        renderIncidents();
+      });
+
+      renderIncidents();
+    });
+  </script>
+</body>
+</html>

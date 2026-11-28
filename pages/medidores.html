@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mapa de Medidores IoT del Condominio — HydroSense" />
+  <title>Mapa de Medidores — HydroSense</title>
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/hydrosense-views.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    /* Estilos específicos de Mapa de Medidores (pages/medidores.html) */
+    .hs-meters-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .hs-meters-header h1 {
+      margin: 4px 0 6px;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+
+    .hs-meters-header p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+    }
+
+    .hs-meters-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .hs-summary-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      color: var(--color-dark);
+    }
+
+    .hs-summary-pill .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .hs-summary-pill .dot.is-active { background: #10B981; }
+    .hs-summary-pill .dot.is-off { background: #94A3B8; }
+
+    /* Barra de filtros */
+    .hs-filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .hs-filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hs-filter-btn {
+      min-height: 38px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-card);
+      color: var(--color-text-muted);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .hs-filter-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .hs-filter-btn.active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
+    }
+
+    /* Croquis SVG */
+    .hs-map-card {
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    .hs-map-legend {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hs-legend-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    .hs-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hs-legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .hs-svg-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      background: #F4F8FC;
+      border: 1px solid var(--color-border);
+    }
+
+    .hs-condo-svg {
+      width: 100%;
+      min-width: 780px;
+      height: auto;
+      display: block;
+    }
+
+    /* Nodos interactivos dentro del SVG */
+    .meter-node {
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .meter-node.is-dimmed {
+      opacity: 0.22;
+      pointer-events: none;
+    }
+
+    .meter-node circle.meter-halo {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .meter-node:hover circle.meter-halo,
+    .meter-node.is-selected circle.meter-halo {
+      opacity: 0.28;
+    }
+
+    .meter-node.is-selected circle.meter-core {
+      stroke: #123A52;
+      stroke-width: 3px;
+    }
+
+    /* Ficha de lectura debajo del mapa */
+    .hs-meter-detail-card {
+      border-radius: 16px;
+      padding: 24px;
+      border: 1.5px solid var(--color-primary);
+      background: var(--color-bg-card);
+    }
+
+    .hs-detail-empty {
+      text-align: center;
+      padding: 18px 12px;
+      color: var(--color-text-muted);
+      font-size: 0.92rem;
+    }
+
+    .hs-detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 18px;
+    }
+
+    .hs-detail-title-group h2 {
+      margin: 4px 0 2px;
+      font-size: 1.25rem;
+      color: var(--color-dark);
+    }
+
+    .hs-detail-meta-sub {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    .hs-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .hs-status-badge.is-active {
+      background: #E9F7F6;
+      color: #087F8C;
+    }
+
+    .hs-status-badge.is-off {
+      background: #F1F5F9;
+      color: #475569;
+    }
+
+    .hs-detail-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hs-detail-box {
+      background: var(--color-bg-soft-blue);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .hs-detail-box span {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      margin-bottom: 4px;
+    }
+
+    .hs-detail-box strong {
+      font-size: 1.2rem;
+      color: var(--color-dark);
+    }
+
+    .hs-detail-note {
+      margin: 14px 0 0;
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .hs-detail-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* Modo accesible */
+    body.is-accessible .hs-meter-detail-card,
+    body.is-accessible .hs-map-card {
+      border: 2px solid #000000 !important;
+      background: #FFFFFF !important;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!-- Topbar consistente con pantallas secundarias -->
+  <header class="hs-topbar">
+    <a href="../index.html#panel-lider" class="hs-brand" aria-label="HydroSense Inicio">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+      </svg>
+      <span>HydroSense</span>
+    </a>
+
+    <label class="hs-access-toggle" for="toggle-modo-accesible">
+      <span>Modo Accesible</span>
+      <input type="checkbox" id="toggle-modo-accesible" role="switch" aria-label="Activar modo accesible con texto ampliado y alto contraste" />
+    </label>
+  </header>
+
+  <!-- Subnav del Líder Comunitario -->
+  <nav class="hs-subnav" aria-label="Navegación del panel comunitario">
+    <a href="../index.html#panel-lider" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Inicio</span>
+    </a>
+    <a href="monitoreo.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <span>Gestión</span>
+    </a>
+    <a href="incidencias.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <span>Incidencias</span>
+    </a>
+    <a href="medidores.html" class="hs-nav-item active" aria-current="page">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+      </svg>
+      <span>Medidores</span>
+    </a>
+    <a href="comunicados.html" class="hs-nav-item">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span>Comunicados</span>
+    </a>
+  </nav>
+
+  <main id="contenido-principal" class="hs-container">
+    <div class="hs-meters-header">
+      <div>
+        <span class="eyebrow">MONITOREO DE INFRAESTRUCTURA IOT</span>
+        <h1>Mapa de Medidores del Condominio</h1>
+        <p>Selecciona cualquier medidor en el croquis para consultar su estado operativo y el consumo registrado de cada vecino.</p>
+      </div>
+      <div class="hs-meters-summary" aria-label="Resumen de estado de medidores">
+        <span class="hs-summary-pill"><span class="dot is-active"></span> <strong id="countActivos">21</strong> Activos</span>
+        <span class="hs-summary-pill"><span class="dot is-off"></span> <strong id="countApagados">3</strong> Apagados</span>
+        <span class="hs-summary-pill">Total: <strong>24 medidores</strong></span>
+      </div>
+    </div>
+
+    <!-- Barra de filtros -->
+    <div class="hs-filter-bar" role="region" aria-label="Filtros del croquis de medidores">
+      <div class="hs-filter-group" id="filterStatusGroup">
+        <button type="button" class="hs-filter-btn active" data-filter-status="all">Todos (24)</button>
+        <button type="button" class="hs-filter-btn" data-filter-status="activo">Activos (21)</button>
+        <button type="button" class="hs-filter-btn" data-filter-status="apagado">Apagados (3)</button>
+      </div>
+
+      <div class="hs-filter-group" id="filterZoneGroup">
+        <button type="button" class="hs-filter-btn active" data-filter-zone="all">Todas las zonas</button>
+        <button type="button" class="hs-filter-btn" data-filter-zone="edificio-a">Edificio A</button>
+        <button type="button" class="hs-filter-btn" data-filter-zone="edificio-b">Edificio B</button>
+        <button type="button" class="hs-filter-zone="edificio-c">Edificio C</button>
+        <button type="button" class="hs-filter-btn" data-filter-zone="comunes">Áreas Comunes</button>
+      </div>
+    </div>
+
+    <!-- Croquis Arquitectónico del Condominio (3 Edificios + Áreas Comunes) -->
+    <section class="card hs-map-card" aria-label="Croquis interactivo de medidores IoT">
+      <div class="hs-map-legend">
+        <strong style="font-size:0.9rem; color:var(--color-dark);">Plano General · Residencial Los Álamos (3 Torres y Áreas Comunes)</strong>
+        <div class="hs-legend-items">
+          <span class="hs-legend-item"><span class="hs-legend-swatch" style="background:#10B981;"></span> Activo (transmitiendo)</span>
+          <span class="hs-legend-item"><span class="hs-legend-swatch" style="background:#94A3B8;"></span> Apagado (controlado por vecino)</span>
+        </div>
+      </div>
+
+      <div class="hs-svg-wrapper">
+        <svg id="condoMetersSvg" class="hs-condo-svg" viewBox="0 0 960 440" role="img" aria-label="Croquis del condominio con 24 medidores IoT distribuidos en Edificio A, Edificio B, Edificio C y Áreas Comunes">
+          <!-- Fondo y perímetro del condominio -->
+          <rect x="14" y="14" width="932" height="412" rx="16" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2" />
+
+          <!-- Caminos internos / Pasajes -->
+          <rect x="295" y="34" width="26" height="262" rx="6" fill="#E2E8F0" opacity="0.65" />
+          <rect x="639" y="34" width="26" height="262" rx="6" fill="#E2E8F0" opacity="0.65" />
+          <rect x="34" y="294" width="892" height="24" rx="6" fill="#E2E8F0" opacity="0.65" />
+
+          <!-- EDIFICIO A (Izquierda) -->
+          <g class="condo-zone-box" data-zone-box="edificio-a">
+            <rect x="34" y="34" width="250" height="250" rx="12" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2" />
+            <rect x="34" y="34" width="250" height="36" rx="12" fill="#E7F0FF" />
+            <text x="159" y="57" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#123A52">EDIFICIO A · 7 Dptos.</text>
+            <!-- Divisiones internas suaves -->
+            <line x1="48" y1="125" x2="270" y2="125" stroke="#E2E8F0" stroke-dasharray="4 4" />
+            <line x1="48" y1="185" x2="270" y2="185" stroke="#E2E8F0" stroke-dasharray="4 4" />
+            <line x1="159" y1="78" x2="159" y2="272" stroke="#E2E8F0" stroke-dasharray="4 4" />
+          </g>
+
+          <!-- EDIFICIO B (Centro) -->
+          <g class="condo-zone-box" data-zone-box="edificio-b">
+            <rect x="332" y="34" width="296" height="250" rx="12" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2" />
+            <rect x="332" y="34" width="296" height="36" rx="12" fill="#E7F0FF" />
+            <text x="480" y="57" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#123A52">EDIFICIO B · 7 Dptos.</text>
+            <line x1="348" y1="125" x2="612" y2="125" stroke="#E2E8F0" stroke-dasharray="4 4" />
+            <line x1="348" y1="185" x2="612" y2="185" stroke="#E2E8F0" stroke-dasharray="4 4" />
+            <line x1="480" y1="78" x2="480" y2="272" stroke="#E2E8F0" stroke-dasharray="4 4" />
+          </g>
+
+          <!-- EDIFICIO C (Derecha) -->
+          <g class="condo-zone-box" data-zone-box="edificio-c">
+            <rect x="676" y="34" width="250" height="250" rx="12" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2" />
+            <rect x="676" y="34" width="250" height="36" rx="12" fill="#E7F0FF" />
+            <text x="801" y="57" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#123A52">EDIFICIO C · 7 Dptos.</text>
+            <line x1="690" y1="125" x2="912" y2="125" stroke="#E2E8F0" stroke-dasharray="4 4" />
+            <line x1="690" y1="185" x2="912" y2="185" stroke="#E2E8F0" stroke-dasharray="4 4" />
+            <line x1="801" y1="78" x2="801" y2="272" stroke="#E2E8F0" stroke-dasharray="4 4" />
+          </g>
+
+          <!-- ÁREAS COMUNES (Franja inferior) -->
+          <g class="condo-zone-box" data-zone-box="comunes">
+            <rect x="34" y="328" width="892" height="82" rx="12" fill="#E9F7F6" stroke="#5EEAD4" stroke-width="1.8" />
+            <text x="52" y="352" font-family="Inter, sans-serif" font-size="12.5" font-weight="700" fill="#087F8C">ÁREAS COMUNES Y SUMINISTRO GENERAL (3 medidores)</text>
+            <text x="52" y="370" font-family="Inter, sans-serif" font-size="11" fill="#475569">Cisterna principal, jardines centrales y lavandería / salón comunal</text>
+          </g>
+
+          <!-- Capa dinámica donde JS dibuja los 24 medidores -->
+          <g id="metersNodesLayer"></g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Ficha de Lectura debajo del mapa (solo lectura, sin botones de encendido/apagado para el líder) -->
+    <section id="meterDetailCard" class="card hs-meter-detail-card" aria-live="polite">
+      <div class="hs-detail-empty" id="meterDetailEmpty">
+        Haz clic en cualquiera de los <strong>24 medidores</strong> del croquis superior para visualizar su lectura detallada.
+      </div>
+
+      <div id="meterDetailContent" hidden>
+        <div class="hs-detail-header">
+          <div class="hs-detail-title-group">
+            <span class="eyebrow" id="detailZoneLabel">EDIFICIO A</span>
+            <h2 id="detailUnitTitle">Dpto. A-101 · Fam. Quispe Mamani</h2>
+            <span class="hs-detail-meta-sub" id="detailSensorCode">Código IoT: HS-EA-101 · Última lectura: hace 2 min</span>
+          </div>
+          <span class="hs-status-badge is-active" id="detailStatusBadge">
+            <span class="hs-dot"></span> <span id="detailStatusText">Activo</span>
+          </span>
+        </div>
+
+        <div class="hs-detail-metrics">
+          <div class="hs-detail-box">
+            <span>Consumo registrado hoy</span>
+            <strong id="detailLitersToday">142 L</strong>
+          </div>
+          <div class="hs-detail-box">
+            <span>Acumulado del mes</span>
+            <strong id="detailLitersMonth">4,180 L</strong>
+          </div>
+          <div class="hs-detail-box">
+            <span>Caudal instantáneo</span>
+            <strong id="detailFlowRate">0.0 L/min</strong>
+          </div>
+          <div class="hs-detail-box">
+            <span>Batería del nodo IoT</span>
+            <strong id="detailBattery">94%</strong>
+          </div>
+        </div>
+
+        <p class="hs-detail-note" id="detailOwnerNote">
+          Nota operativa: El encendido o apagado de este medidor es gestionado directamente por el residente asignado desde su panel personal.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast y botón flotante de Asistente por Voz -->
+  <div id="voice-toast" class="voice-toast" role="status" aria-live="polite" hidden></div>
+  <button id="btn-asistente-voz" class="fab-voice" type="button" aria-label="Consultar consumo mediante comandos de voz" title="Asistente por voz">
+    <span aria-hidden="true">🎤</span>
+  </button>
+
+  <script src="../js/hydrosense-views.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const METERS_DATA = [
+        // Edificio A (7 medidores)
+        { id: 'HS-EA-101', zone: 'edificio-a', zoneName: 'Edificio A', unit: 'Dpto. A-101', resident: 'Fam. Quispe Mamani', status: 'activo', litersToday: 142, litersMonth: 4180, flow: '0.0 L/min', battery: '94%', lastSync: 'hace 2 min', x: 102, y: 100 },
+        { id: 'HS-EA-102', zone: 'edificio-a', zoneName: 'Edificio A', unit: 'Dpto. A-102', resident: 'Fam. Paredes Huamán', status: 'activo', litersToday: 168, litersMonth: 4890, flow: '1.4 L/min', battery: '91%', lastSync: 'hace 1 min', x: 216, y: 100 },
+        { id: 'HS-EA-201', zone: 'edificio-a', zoneName: 'Edificio A', unit: 'Dpto. A-201', resident: 'Fam. Mendoza Torres', status: 'apagado', litersToday: 0, litersMonth: 3210, flow: '0.0 L/min', battery: '88%', lastSync: 'Apagado por usuario (08:15 h)', x: 102, y: 156 },
+        { id: 'HS-EA-202', zone: 'edificio-a', zoneName: 'Edificio A', unit: 'Dpto. A-202', resident: 'Fam. Chávez Rojas', status: 'activo', litersToday: 129, litersMonth: 3870, flow: '0.0 L/min', battery: '96%', lastSync: 'hace 3 min', x: 216, y: 156 },
+        { id: 'HS-EA-301', zone: 'edificio-a', zoneName: 'Edificio A', unit: 'Dpto. A-301', resident: 'Fam. Salazar Vega', status: 'activo', litersToday: 185, litersMonth: 5340, flow: '2.1 L/min', battery: '85%', lastSync: 'hace 1 min', x: 102, y: 212 },
+        { id: 'HS-EA-302', zone: 'edificio-a', zoneName: 'Edificio A', unit: 'Dpto. A-302', resident: 'Srta. Lucía Flores', status: 'activo', litersToday: 94, litersMonth: 2790, flow: '0.0 L/min', battery: '92%', lastSync: 'hace 4 min', x: 216, y: 212 },
+        { id: 'HS-EA-401', zone: 'edificio-a', zoneName: 'Edificio A', unit: 'Dpto. A-401', resident: 'Fam. Castillo Ruiz', status: 'activo', litersToday: 153, litersMonth: 4510, flow: '0.0 L/min', battery: '90%', lastSync: 'hace 2 min', x: 159, y: 260 },
+
+        // Edificio B (7 medidores)
+        { id: 'HS-EB-101', zone: 'edificio-b', zoneName: 'Edificio B', unit: 'Dpto. B-101', resident: 'Fam. Gutiérrez Soto', status: 'activo', litersToday: 161, litersMonth: 4720, flow: '0.0 L/min', battery: '95%', lastSync: 'hace 1 min', x: 412, y: 100 },
+        { id: 'HS-EB-102', zone: 'edificio-b', zoneName: 'Edificio B', unit: 'Dpto. B-102', resident: 'Fam. Vargas León', status: 'activo', litersToday: 137, litersMonth: 4020, flow: '0.0 L/min', battery: '89%', lastSync: 'hace 3 min', x: 548, y: 100 },
+        { id: 'HS-EB-201', zone: 'edificio-b', zoneName: 'Edificio B', unit: 'Dpto. B-201', resident: 'Sr. Diego Morales', status: 'activo', litersToday: 112, litersMonth: 3360, flow: '0.8 L/min', battery: '93%', lastSync: 'hace 1 min', x: 412, y: 156 },
+        { id: 'HS-EB-202', zone: 'edificio-b', zoneName: 'Edificio B', unit: 'Dpto. B-202', resident: 'Fam. Ramírez Cruz', status: 'apagado', litersToday: 18, litersMonth: 3640, flow: '0.0 L/min', battery: '82%', lastSync: 'Apagado por usuario (ayer)', x: 548, y: 156 },
+        { id: 'HS-EB-301', zone: 'edificio-b', zoneName: 'Edificio B', unit: 'Dpto. B-301', resident: 'Fam. Herrera Díaz', status: 'activo', litersToday: 176, litersMonth: 5110, flow: '0.0 L/min', battery: '91%', lastSync: 'hace 2 min', x: 412, y: 212 },
+        { id: 'HS-EB-302', zone: 'edificio-b', zoneName: 'Edificio B', unit: 'Dpto. B-302', resident: 'Fam. Ortiz Peña', status: 'activo', litersToday: 148, litersMonth: 4390, flow: '0.0 L/min', battery: '97%', lastSync: 'hace 2 min', x: 548, y: 212 },
+        { id: 'HS-EB-401', zone: 'edificio-b', zoneName: 'Edificio B', unit: 'Dpto. B-401', resident: 'Fam. Navarro Silva', status: 'activo', litersToday: 159, litersMonth: 4680, flow: '1.1 L/min', battery: '87%', lastSync: 'hace 1 min', x: 480, y: 260 },
+
+        // Edificio C (7 medidores)
+        { id: 'HS-EC-101', zone: 'edificio-c', zoneName: 'Edificio C', unit: 'Dpto. C-101', resident: 'Fam. Campos Ríos', status: 'activo', litersToday: 134, litersMonth: 3980, flow: '0.0 L/min', battery: '94%', lastSync: 'hace 2 min', x: 744, y: 100 },
+        { id: 'HS-EC-102', zone: 'edificio-c', zoneName: 'Edificio C', unit: 'Dpto. C-102', resident: 'Sra. Elena Aguilar', status: 'activo', litersToday: 105, litersMonth: 3120, flow: '0.0 L/min', battery: '92%', lastSync: 'hace 4 min', x: 858, y: 100 },
+        { id: 'HS-EC-201', zone: 'edificio-c', zoneName: 'Edificio C', unit: 'Dpto. C-201', resident: 'Fam. Delgado Ponce', status: 'activo', litersToday: 192, litersMonth: 5620, flow: '2.6 L/min', battery: '84%', lastSync: 'hace 1 min', x: 744, y: 156 },
+        { id: 'HS-EC-202', zone: 'edificio-c', zoneName: 'Edificio C', unit: 'Dpto. C-202', resident: 'Fam. Medina Lara', status: 'activo', litersToday: 141, litersMonth: 4150, flow: '0.0 L/min', battery: '90%', lastSync: 'hace 3 min', x: 858, y: 156 },
+        { id: 'HS-EC-301', zone: 'edificio-c', zoneName: 'Edificio C', unit: 'Dpto. C-301', resident: 'Sr. Carlos Benítez', status: 'apagado', litersToday: 0, litersMonth: 2450, flow: '0.0 L/min', battery: '79%', lastSync: 'Apagado por usuario (viaje)', x: 744, y: 212 },
+        { id: 'HS-EC-302', zone: 'edificio-c', zoneName: 'Edificio C', unit: 'Dpto. C-302', resident: 'Fam. Cárdenas Luna', status: 'activo', litersToday: 155, litersMonth: 4590, flow: '0.0 L/min', battery: '95%', lastSync: 'hace 2 min', x: 858, y: 212 },
+        { id: 'HS-EC-401', zone: 'edificio-c', zoneName: 'Edificio C', unit: 'Dpto. C-401', resident: 'Fam. Espinoza Gil', status: 'activo', litersToday: 163, litersMonth: 4810, flow: '0.0 L/min', battery: '91%', lastSync: 'hace 1 min', x: 801, y: 260 },
+
+        // Áreas Comunes (3 medidores)
+        { id: 'HS-AC-01', zone: 'comunes', zoneName: 'Áreas Comunes', unit: 'Cisterna Principal', resident: 'Suministro General Condominio', status: 'activo', litersToday: 420, litersMonth: 12400, flow: '4.2 L/min', battery: '98%', lastSync: 'hace 1 min', x: 430, y: 374 },
+        { id: 'HS-AC-02', zone: 'comunes', zoneName: 'Áreas Comunes', unit: 'Riego Jardines Centrales', resident: 'Mantenimiento Áreas Verdes', status: 'activo', litersToday: 210, litersMonth: 5800, flow: '0.0 L/min', battery: '89%', lastSync: 'hace 5 min', x: 635, y: 374 },
+        { id: 'HS-AC-03', zone: 'comunes', zoneName: 'Áreas Comunes', unit: 'Salón y Lavandería Comunal', resident: 'Uso Vecinal Compartido', status: 'activo', litersToday: 185, litersMonth: 5120, flow: '1.5 L/min', battery: '93%', lastSync: 'hace 2 min', x: 830, y: 374 }
+      ];
+
+      const nodesLayer = document.getElementById('metersNodesLayer');
+      let selectedMeterId = null;
+      let currentStatusFilter = 'all';
+      let currentZoneFilter = 'all';
+
+      function renderNodes() {
+        nodesLayer.innerHTML = METERS_DATA.map(m => {
+          const isActive = m.status === 'activo';
+          const fillColor = isActive ? '#10B981' : '#94A3B8';
+          const haloColor = isActive ? '#10B981' : '#64748B';
+          const shortTag = m.unit.replace('Dpto. ', '').replace('Cisterna Principal', 'Cisterna').replace('Riego Jardines Centrales', 'Jardines').replace('Salón y Lavandería Comunal', 'Salón');
+          const matchesStatus = currentStatusFilter === 'all' || m.status === currentStatusFilter;
+          const matchesZone = currentZoneFilter === 'all' || m.zone === currentZoneFilter;
+          const isDimmed = !(matchesStatus && matchesZone);
+          const isSelected = selectedMeterId === m.id;
+
+          return `
+            <g class="meter-node ${isDimmed ? 'is-dimmed' : ''} ${isSelected ? 'is-selected' : ''}"
+               data-meter-id="${m.id}"
+               tabindex="0"
+               role="button"
+               aria-label="${m.unit}, ${m.resident}, estado ${m.status}, ${m.litersToday} litros hoy">
+              <circle class="meter-halo" cx="${m.x}" cy="${m.y}" r="22" fill="${haloColor}" />
+              <circle class="meter-core" cx="${m.x}" cy="${m.y}" r="13" fill="${fillColor}" stroke="#FFFFFF" stroke-width="2.5" />
+              <text x="${m.x}" y="${m.y + 3.5}" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#FFFFFF">${shortTag}</text>
+              <rect x="${m.x - 24}" y="${m.y + 16}" width="48" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="0.8" />
+              <text x="${m.x}" y="${m.y + 26.5}" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="#123A52">${m.litersToday} L</text>
+            </g>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.meter-node').forEach(node => {
+          const handler = () => selectMeter(node.dataset.meterId);
+          node.addEventListener('click', handler);
+          node.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handler();
+            }
+          });
+        });
+      }
+
+      function selectMeter(meterId) {
+        const meter = METERS_DATA.find(m => m.id === meterId);
+        if (!meter) return;
+        selectedMeterId = meter.id;
+        renderNodes();
+
+        document.getElementById('meterDetailEmpty').hidden = true;
+        const content = document.getElementById('meterDetailContent');
+        content.hidden = false;
+
+        document.getElementById('detailZoneLabel').textContent = meter.zoneName.toUpperCase();
+        document.getElementById('detailUnitTitle').textContent = `${meter.unit} · ${meter.resident}`;
+        document.getElementById('detailSensorCode').textContent = `Código IoT: ${meter.id} · Última sincronización: ${meter.lastSync}`;
+
+        const badge = document.getElementById('detailStatusBadge');
+        const statusText = document.getElementById('detailStatusText');
+        const isActive = meter.status === 'activo';
+        badge.className = `hs-status-badge ${isActive ? 'is-active' : 'is-off'}`;
+        statusText.textContent = isActive ? 'Activo' : 'Apagado';
+
+        document.getElementById('detailLitersToday').textContent = `${meter.litersToday} L`;
+        document.getElementById('detailLitersMonth').textContent = `${meter.litersMonth.toLocaleString('es-PE')} L`;
+        document.getElementById('detailFlowRate').textContent = meter.flow;
+        document.getElementById('detailBattery').textContent = meter.battery;
+      }
+
+      document.querySelectorAll('#filterStatusGroup .hs-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#filterStatusGroup .hs-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentStatusFilter = btn.dataset.filterStatus;
+          renderNodes();
+        });
+      });
+
+      document.querySelectorAll('#filterZoneGroup .hs-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#filterZoneGroup .hs-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentZoneFilter = btn.dataset.filterZone;
+          renderNodes();
+        });
+      });
+
+      renderNodes();
+    });
+  </script>
+</body>
+</html>
